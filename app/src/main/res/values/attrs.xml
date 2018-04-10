@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MaterialHome">
+        <attr name="publishInfoBackground" format="reference|color" />
+        <attr name="searchIconColor" format="reference|color" />
+        <attr name="discoverSearchBg" format="reference|color" />
+    </declare-styleable>
+
+    <string-array name="main_tab_type">
+        <item>求漂</item>
+        <item>我的漂书</item>
+        <item>我的求漂</item>
+    </string-array>
+
+</resources>

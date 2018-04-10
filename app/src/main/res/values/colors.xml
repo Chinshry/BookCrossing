@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2BACE0</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="orange">#fea23f</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_D5D4D4">#D5D4D4</color>
+    <color name="black">#000000</color>
+    <color name="gray">#787878</color>
+
+
+
+    <color name="top_bar_normal_bg">#ecbb89</color>
+    <color name="orange_light">#ffd39b</color>
+    <color name="tv_gray_deep">#818181</color>
+    <color name="light_dark">#2F2F2F</color>
+    <color name="light_gray">#BEBEBE</color>
+
+    <color name="search_icon_color">#be000000</color>
+    <color name="publish_info_bg">#6ececece</color>
+
+
+    <!--theme color-->
+    <color name="colorPrimaryDarkNight">#000000</color>
+    <color name="colorPrimaryLight">#C8E6C9</color>
+    <color name="primary_text">#de000000</color>
+    <color name="secondary_text">#8a000000</color>
+    <color name="primary_text_dark">#deffffff</color>
+
+    <!--swipeRefreshLayout color-->
+    <color name="recycler_color1">#bc9191</color>
+    <color name="recycler_color2">#edd36a</color>
+    <color name="recycler_color3">#82c1f9</color>
+    <color name="recycler_color4">#68d661</color>
+    <color name="book_title_mask">#80000000</color>
+    <color name="grass_green">#46C01C</color>
+
+
+    <!-- ************确认取消对话框************ -->
+    <!-- 对话框的边框颜色 -->
+    <color name="confirm_cancel_util_dialog_stroke_color">#7fbfbfbf</color>
+    <!-- 对话框的填充颜色 -->
+    <color name="confirm_cancel_util_dialog_solid_color">#ffffffff</color>
+    <!-- 对话框的标题颜色 -->
+    <color name="confirm_cancel_util_dialog_title_color">#000000</color>
+    <!-- 对话框的内容颜色 -->
+    <color name="confirm_cancel_util_dialog_message_color">#6A6A6A</color>
+    <!-- 对话框的右侧按钮默认颜色 -->
+    <color name="confirm_cancel_util_dialog_btn_right_color">#ffffff</color>
+    <!-- 对话框的左侧按钮颜色 -->
+    <color name="confirm_cancel_util_dialog_btn_left_color">#2BACE0</color>
+    <!-- 对话框的右侧按钮文字颜色 -->
+    <color name="confirm_cancel_util_dialog_btn_right_text_color">#000000</color>
+    <!-- 对话框的左侧按钮文字颜色 -->
+    <color name="confirm_cancel_util_dialog_btn_left_text_color">#ffffffff</color>
+    <color name="deep_orange">#FFB358</color>
+</resources>

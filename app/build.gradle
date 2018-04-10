@@ -1,0 +1,148 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "26.0.2"
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    defaultConfig {
+        applicationId "com.bcing"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    //noinspection GradleCompatible
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    //适配
+    compile 'com.zhy:autolayout:1.4.3'
+    //注解
+    compile 'com.jakewharton:butterknife:6.1.0'
+    //打印Log
+    compile 'com.github.zhaokaiqiang.klog:library:0.0.1'
+    //Tablayout
+    //noinspection GradleCompatible
+    compile 'com.android.support:design:24.2.0'
+    implementation files('libs/fastjson-1.1.55.android.jar')
+    //Circleimageview
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+    //RxVolley
+    compile('com.kymjs.rxvolley:rxvolley:1.1.4') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'com.squareup.okio'
+        exclude group: 'io.reactivex'
+    }
+    compile 'com.android.support:cardview-v7:25.1.0'
+    compile 'com.jakewharton:butterknife:8.0.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.android.support:customtabs:25.1.0'
+    //    //ExpandTextView
+    //    compile 'com.hymane.expandtextview:library:1.0.4'
+    //    //TagFlowLayout
+    //    compile 'com.github.hymanme.tagflowlayout:tagflowlayout:0.2.2'
+    //Glide
+    compile('com.github.bumptech.glide:glide:3.7.0') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'com.squareup.okio'
+    }
+    compile('com.github.bumptech.glide:okhttp3-integration:1.4.0@aar') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'com.squareup.okio'
+    }
+    compile('com.squareup.retrofit2:retrofit:2.3.0') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'com.squareup.okio'
+        exclude group: 'io.reactivex'
+    }
+    compile ('com.squareup.retrofit2:converter-gson:2.3.0'){
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'com.google.code.gson'
+        exclude group: 'io.reactivex'
+        exclude group: 'io.reactivex:rxjava'
+    }
+    compile ('com.squareup.retrofit2:adapter-rxjava:2.1.0'){
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'io.reactivex'
+        exclude group: 'io.reactivex:rxjava'
+    }
+    //ExpandTextView
+    compile 'com.hymane.expandtextview:library:1.0.4'
+
+    compile 'com.jpardogo.materialtabstrip:library:1.1.1'
+
+}
+
+
+apply plugin: 'com.android.application'
+
+
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //以下SDK开发者请根据需要自行选择
+    //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
+    //3.5.5：请务必查看下面注释[1]
+    compile('cn.bmob.android:bmob-sdk:3.5.5') {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'com.squareup.okio'
+        exclude group: 'com.google.code.gson'
+        exclude group: 'io.reactivex'
+    }
+
+//
+//    //bmob-push：Bmob的推送包
+//    compile 'cn.bmob.android:bmob-push:0.8'
+//
+//    //bmob-im：Bmob的即时通讯包，注意每个版本的im依赖特定版本的bmob-sdk，具体的依赖关系可查看下面注释[2]
+//    compile 'cn.bmob.android:bmob-im:2.0.5@aar'
+//    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
+//
+//    //bmob-sms ：Bmob单独为短信服务提供的包
+//    compile 'cn.bmob.android:bmob-sms:1.0.1'
+//
+//    //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
+//    compile 'cn.bmob.android:http-legacy:1.0'
+}
+
+
+dependencies {
+
+    compile('com.github.gzu-liyujiang.AndroidPicker:WheelPicker:latest.release') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.github.gzu-liyujiang.AndroidPicker:FilePicker:latest.release') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.github.gzu-liyujiang.AndroidPicker:ColorPicker:latest.release') {
+        exclude group: 'com.android.support'
+    }
+}
+

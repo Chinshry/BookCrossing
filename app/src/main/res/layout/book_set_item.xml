@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="125dp"
+    android:layout_margin="5dp"
+    android:padding="5dp"
+    android:layout_gravity="center"
+    android:background="@drawable/listview_bg">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/bookset_userdp"
+        android:layout_gravity="top"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="5dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/bookset_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#9C9C9C"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/bookset_title"
+            android:maxLines="1"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textColor="#101010"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/bookset_author"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#646464"
+            android:textSize="13sp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/bookset_publisher"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:textColor="#646464"
+            android:textSize="13sp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/bookset_city"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#646464"
+            android:textSize="13sp"
+            android:text="TextView" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/bookset_image"
+        android:layout_marginTop="10dp"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:src="@drawable/bookimage" />
+</LinearLayout>

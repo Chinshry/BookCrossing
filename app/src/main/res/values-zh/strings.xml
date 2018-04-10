@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">漂书</string>
+    <string name="search">求漂</string>
+    <string name="set">放漂</string>
+    <string name="my">我漂</string>
+    <string name="message">消息</string>
+    <string name="profile">个人</string>
+</resources>

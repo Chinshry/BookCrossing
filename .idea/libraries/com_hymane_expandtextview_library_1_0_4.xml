@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.hymane.expandtextview:library-1.0.4">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-1.0.4.aar/39db20abdb63c6d73d99e3d6cce2cb98/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-1.0.4.aar/39db20abdb63c6d73d99e3d6cce2cb98/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.hymane.expandtextview/library/1.0.4/a5734a3b975f93a15f5d29d646aaf6079e281fb/library-1.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

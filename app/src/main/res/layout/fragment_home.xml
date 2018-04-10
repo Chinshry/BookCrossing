@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appBarLayout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:layout_gravity="bottom"
+            android:background="@color/white">
+
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:elevation="4dp"
+                android:theme="@style/AppTheme"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:titleTextColor="@color/white" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/m_main_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.92">
+            </android.support.v4.view.ViewPager>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:baselineAligned="false">
+                <FrameLayout
+                    android:id="@+id/m_main_fw_lay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/m_main_fw_btn_false"
+                        style="@style/fragment_tab_item_false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/bottom1_tab_false"
+                        android:text="@string/search" />
+
+                    <Button
+                        android:id="@+id/m_main_fw_btn_true"
+                        style="@style/fragment_tab_item_true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/bottom1_tab_true"
+                        android:text="@string/search" />
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/m_main_sj_lay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/m_main_sj_btn_false"
+                        style="@style/fragment_tab_item_false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/bottom2_tab_false"
+                        android:text="@string/set" />
+
+                    <Button
+                        android:id="@+id/m_main_sj_btn_true"
+                        style="@style/fragment_tab_item_true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/bottom2_tab_true"
+                        android:text="@string/set" />
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/m_main_gz_lay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/m_main_gz_btn_false"
+                        style="@style/fragment_tab_item_false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/bottom3_tab_false"
+                        android:text="@string/my" />
+
+                    <Button
+                        android:id="@+id/m_main_gz_btn_true"
+                        style="@style/fragment_tab_item_true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/bottom3_tab_true"
+                        android:text="@string/my" />
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/m_main_lxr_lay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/m_main_lxr_btn_false"
+                        style="@style/fragment_tab_item_false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/bottom4_tab_false"
+                        android:text="@string/message" />
+
+                    <Button
+                        android:id="@+id/m_main_lxr_btn_true"
+                        style="@style/fragment_tab_item_true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/bottom4_tab_true"
+                        android:text="@string/message" />
+                </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/m_main_wd_lay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/m_main_wd_btn_false"
+                        style="@style/fragment_tab_item_false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/bottom5_tab_false"
+                        android:text="@string/profile" />
+
+                    <Button
+                        android:id="@+id/m_main_wd_btn_true"
+                        style="@style/fragment_tab_item_true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/bottom5_tab_true"
+                        android:text="@string/profile" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

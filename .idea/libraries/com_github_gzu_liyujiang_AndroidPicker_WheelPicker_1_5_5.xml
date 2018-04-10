@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.github.gzu-liyujiang.AndroidPicker:WheelPicker-1.5.5">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/WheelPicker-1.5.5.aar/49031d0ef998b1ec8d0d559eb8ad9cf4/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/WheelPicker-1.5.5.aar/49031d0ef998b1ec8d0d559eb8ad9cf4/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.gzu-liyujiang.AndroidPicker/WheelPicker/1.5.5/55ffd8dc249e167b901703f5a7a89f2a15c71668/WheelPicker-1.5.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
