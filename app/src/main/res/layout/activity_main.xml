@@ -6,7 +6,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="#EEEEEE">
 
     <FrameLayout
         android:id="@+id/fl_content"
@@ -20,8 +20,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="bottom"
-            android:layout_gravity="bottom"
-            android:background="@color/white">
+            android:layout_gravity="bottom">
 
 
             <android.support.v7.widget.Toolbar

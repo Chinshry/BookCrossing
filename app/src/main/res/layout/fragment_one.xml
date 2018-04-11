@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--<SearchView-->
-        <!--android:id="@+id/sv_lookup"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:queryHint="@string/lookup">-->
+    <SearchView
+        android:id="@+id/sv_lookup"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:queryHint="@string/lookup">
 
-    <!--</SearchView>-->
+    </SearchView>
     <!--<ListView-->
         <!--android:id="@+id/mListView"-->
         <!--android:layout_width="match_parent"-->
@@ -18,7 +19,17 @@
         <!--android:layout_weight="1" >-->
 
     <!--</ListView>-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_View"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <include layout="@layout/recycler_content" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <!--<include layout="@layout/recycler_content" />-->
 </LinearLayout>

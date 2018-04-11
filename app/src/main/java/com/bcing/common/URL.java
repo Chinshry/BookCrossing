@@ -9,6 +9,9 @@ public class URL {
      */
     public static final String HOST_URL_DOUBAN = "https://api.douban.com/v2/";
 
+    public static final String HOST_URL_DOUBAN_ISBN = "https://api.douban.com/v2/book/isbn/";
+
+
 
 
 }

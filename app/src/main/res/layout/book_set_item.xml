@@ -4,7 +4,10 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="125dp"
-    android:layout_margin="5dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginBottom="4dp"
+
     android:padding="5dp"
     android:layout_gravity="center"
     android:background="@drawable/listview_bg">
@@ -63,14 +66,26 @@
             android:textSize="13sp"
             android:text="TextView" />
 
-        <TextView
-            android:id="@+id/bookset_city"
-            android:maxLines="1"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#646464"
-            android:textSize="13sp"
-            android:text="TextView" />
+            android:gravity="center">
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="20dp"
+                android:src="@drawable/location"
+                android:tint="#3c3c3c"/>
+
+            <TextView
+                android:id="@+id/bookset_city"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#3c3c3c"
+                android:textSize="15sp"
+                android:text="TextView" />
+        </LinearLayout>
+
 
     </LinearLayout>
 

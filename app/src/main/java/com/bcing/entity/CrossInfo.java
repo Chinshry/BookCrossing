@@ -15,6 +15,7 @@ public class CrossInfo extends BmobObject {
     private String isbn;
     private String crossuser;
     private String crosscity;
+//    private String createdAt;
 
 
 
@@ -41,6 +42,10 @@ public class CrossInfo extends BmobObject {
     public void setCrosscity(String crosscity) {
         this.crosscity = crosscity;
     }
+
+//    public String getcreatedAt() {
+//        return createdAt;
+//    }
 
 
 }
