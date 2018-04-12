@@ -81,6 +81,15 @@
             android:name=".ui.activity.BookDetailActivity"
             android:label="SearchResultActivity"/>
 
+        <!-- 我的收藏-->
+        <activity
+            android:name=".ui.activity.MyWishActivity"
+            android:label="MyWishActivity"/>
+
+        <!-- 主页书籍详情-->
+        <activity
+            android:name=".ui.activity.CrossBookDetailActivity"
+            android:label="CossBookDetailActivityross"/>
 
         <!-- WebViewActivity-->
         <activity

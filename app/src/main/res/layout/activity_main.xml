@@ -6,7 +6,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE">
+    android:background="@color/background">
 
     <FrameLayout
         android:id="@+id/fl_content"
@@ -30,6 +30,7 @@
                 android:background="@color/colorPrimary"
                 android:elevation="4dp"
                 android:theme="@style/AppTheme"
+                android:textAlignment="center"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:titleTextColor="@color/white" />
 

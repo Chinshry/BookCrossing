@@ -35,6 +35,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,6 +45,7 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 import static com.kymjs.rxvolley.toolbox.RxVolleyContext.toast;
 
@@ -127,11 +129,12 @@ public class BookDetailActivity extends BaseActivity implements IBookDetailView 
             ConfirmCancelDialog dialog = ConfirmCancelDialog.getInstance(BookDetailActivity.this,
                     new ConfirmCancelDialog.DialogSetListener() {
                         @Override
-                        public void setDialog(TextView title, TextView message, Button leftBtn, Button rightBtn) {
-                            title.setText("确定漂流");
-                            message.setText("您确定开始漂流《" + mBookInfoResponse.getTitle() + "》吗？");
+                        public void setDialog(TextView title, TextView message, Button leftBtn, Button betBtn, Button rightBtn) {
+                            title.setText("确认");
+                            message.setText("您要对《" + mBookInfoResponse.getTitle() + "》进行什么操作？");
                             message.setGravity(Gravity.CENTER);
-                            leftBtn.setText("确定");
+                            leftBtn.setText("我要漂流");
+                            betBtn.setText("我要收藏");
                             rightBtn.setText("取消");
                         }
                     });
@@ -181,6 +184,73 @@ public class BookDetailActivity extends BaseActivity implements IBookDetailView 
                                     }
                                 } else {
                                     toast("您已漂流过该书籍" );
+                                }
+                            }else {
+                                KLog.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                            }
+
+                        }
+                    });
+
+
+                }
+
+                @Override
+                public void betClickListener() {
+
+//                    CrossInfo crossinfo = new CrossInfo();
+                    MyUser userInfo = BmobUser.getCurrentUser(MyUser.class);
+
+
+                    //Bmob复合查询
+                    BmobQuery<MyUser> eq1 = new BmobQuery<MyUser>();
+                    eq1.addWhereEqualTo("username", userInfo.getUsername());
+                    String [] isbn = {mBookInfoResponse.getIsbn13()};
+                    BmobQuery<MyUser> eq2 = new BmobQuery<MyUser>();
+                    eq2.addWhereContainsAll("wish", Arrays.asList(isbn));
+
+                    List<BmobQuery<MyUser>> andQuerys = new ArrayList<BmobQuery<MyUser>>();
+                    andQuerys.add(eq1);
+                    andQuerys.add(eq2);
+
+                    BmobQuery<MyUser> query = new BmobQuery<MyUser>();
+                    query.and(andQuerys);
+                    query.findObjects(new FindListener<MyUser>() {
+                        @Override
+                        public void done(List<MyUser> object, BmobException e) {
+                            KLog.e("bmob", "List：" + object.isEmpty());
+                            if (e==null) {
+                                if (object.isEmpty()) {
+                                    userInfo.add("wish",isbn[0]);
+                                    {
+                                        userInfo.update(new UpdateListener() {
+
+                                            @Override
+                                            public void done(BmobException e) {
+                                                if(e==null){
+                                                    toast("您已成功收藏《" + mBookInfoResponse.getTitle() + "》！");
+
+                                                }else{
+                                                    toast("创建数据失败：" + e.getMessage());
+                                                    KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                                }
+                                            }
+
+                                        });
+//                                        userInfo.save(new SaveListener<String>() {
+//                                            @Override
+//                                            public void done(String objectId, BmobException e) {
+//                                                if (e == null) {
+//                                                    toast("您已成功收藏《" + mBookInfoResponse.getTitle() + "》！");
+//                                                } else {
+//                                                    toast("创建数据失败：" + e.getMessage());
+//                                                    KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+//                                                }
+//                                            }
+//                                        });
+                                    }
+                                } else {
+                                    toast("您已收藏过该书籍" );
                                 }
                             }else {
                                 KLog.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());

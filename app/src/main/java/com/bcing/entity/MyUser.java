@@ -1,5 +1,7 @@
 package com.bcing.entity;
 
+import java.util.List;
+
 import cn.bmob.v3.BmobUser;
 
 /**
@@ -16,6 +18,7 @@ public class MyUser extends BmobUser{
     private String nick;
     private String city;
     private String desc;
+    private List<String> wish;
 
     public int getAge() {
         return age;
@@ -51,6 +54,14 @@ public class MyUser extends BmobUser{
 
     public String getDesc() {
         return desc;
+    }
+
+    public void setWish(List wish) {
+        this.wish = wish;
+    }
+
+    public List getWish() {
+        return wish;
     }
 
     public void setDesc(String desc) {

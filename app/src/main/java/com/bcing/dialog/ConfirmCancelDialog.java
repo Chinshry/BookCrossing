@@ -108,12 +108,13 @@ public class ConfirmCancelDialog extends DialogFragment {
 
 		TextView title = (TextView)myView.findViewById(R.id.title);//标题
 		TextView message = (TextView)myView.findViewById(R.id.message);//内容
-		Button leftBtn = (Button)myView.findViewById(R.id.cancel);//左侧按钮
-		Button rightBtn = (Button)myView.findViewById(R.id.confirm);//右侧按钮
+		Button leftBtn = (Button)myView.findViewById(R.id.confirm);//左侧按钮
+		Button rightBtn = (Button)myView.findViewById(R.id.cancle);//右侧按钮
+		Button betBtn =  (Button)myView.findViewById(R.id.wish);//中间按钮
 
 		//==========================初始展现==========================
 		if(mDialogSetListener != null){
-			mDialogSetListener.setDialog(title, message, leftBtn, rightBtn);
+			mDialogSetListener.setDialog(title, message, leftBtn, betBtn, rightBtn);
 		}
 
 		//如果左侧按钮不存在，则右侧按钮占满并且底色为蓝色、文字颜色为白色
@@ -141,6 +142,16 @@ public class ConfirmCancelDialog extends DialogFragment {
 			}
 		});
 
+		betBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(mDialogClickListener != null){
+					mDialogClickListener.betClickListener();
+				}
+				dismiss();//关闭对话框，自动执行onDismiss中的方法
+			}
+		});
+
 		rightBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -161,7 +172,7 @@ public class ConfirmCancelDialog extends DialogFragment {
 		 * @param message - 内容控件【默认空白】
 		 * @param leftBtn - 左侧按钮控件【默认“取消”】
 		 * @param rightBtn - 右侧按钮控件【默认“确定”】*/
-		public abstract void setDialog(TextView title, TextView message, Button leftBtn, Button rightBtn);
+		public abstract void setDialog(TextView title, TextView message, Button leftBtn, Button betBtn, Button rightBtn);
 	}
 
 	public void setDialogSetListener(DialogSetListener dialogSetListener) {
@@ -173,6 +184,8 @@ public class ConfirmCancelDialog extends DialogFragment {
 	{
 		/**左侧按钮*/
 		public abstract void leftClickListener();
+		/**右侧按钮*/
+		public abstract void betClickListener();
 		/**右侧按钮*/
 		public abstract void rightClickListener();
 	}

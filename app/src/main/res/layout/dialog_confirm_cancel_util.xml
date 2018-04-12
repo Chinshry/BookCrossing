@@ -48,7 +48,7 @@
             android:background="@android:color/transparent" >
 			<!-- 取消按钮 -->
             <Button
-                android:id="@+id/cancel"
+                android:id="@+id/confirm"
                 android:layout_width="0.0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -60,9 +60,23 @@
                 android:paddingTop="@dimen/confirm_cancel_util_dialog_title_padding"
                 android:paddingBottom="@dimen/confirm_cancel_util_dialog_title_padding" />
 
-			<!-- 确定按钮 -->
+            <!-- 收藏按钮 -->
             <Button
-                android:id="@+id/confirm"
+                android:id="@+id/wish"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@drawable/dialog_confirm_cancel_util_right_btn_bg"
+                android:gravity="center"
+                android:text="@string/confirm_between_btn"
+                android:textColor="@color/confirm_cancel_util_dialog_btn_right_text_color"
+                android:textSize="@dimen/confirm_cancel_util_dialog_btn_text_size"
+                android:paddingTop="@dimen/confirm_cancel_util_dialog_title_padding"
+                android:paddingBottom="@dimen/confirm_cancel_util_dialog_title_padding" />
+
+			<!-- 漂流按钮 -->
+            <Button
+                android:id="@+id/cancle"
                 android:layout_width="0.0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
