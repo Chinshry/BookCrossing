@@ -101,8 +101,10 @@ public class CrossBookDetailActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-
-                startActivity(new Intent(activity, EChartActivity.class));
+                Intent intent = new Intent(activity, EChartActivity.class);
+                intent.putExtra("bookCode", mCrossBookInfo.getCrosscode());
+                intent.putExtra("owncity", mCrossBookInfo.getcity());
+                startActivity(intent);
             }
         });
 
