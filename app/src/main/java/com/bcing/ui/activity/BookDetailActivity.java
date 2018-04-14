@@ -11,6 +11,7 @@ import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -43,6 +44,7 @@ import butterknife.ButterKnife;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -68,6 +70,8 @@ public class BookDetailActivity extends BaseActivity implements IBookDetailView 
     RecyclerView mRecyclerView;
     @BindView(R.id.fab)
     FloatingActionButton mFab;
+//    @BindView(R.id.webView)
+//    WebView webView;
     private LinearLayoutManager mLayoutManager;
     private BookDetailAdapter mDetailAdapter;
     private ImageView iv_book_img;
@@ -79,12 +83,15 @@ public class BookDetailActivity extends BaseActivity implements IBookDetailView 
 
     private BookDetailPresenterImpl bookDetailPresenter;
 
+    private Integer num ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_book_detail);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         mToolbar.setNavigationIcon(AppCompatResources.getDrawable(this, R.drawable.ic_action_clear));
+
     }
 
     @Override
@@ -124,119 +131,138 @@ public class BookDetailActivity extends BaseActivity implements IBookDetailView 
                     });
         }
         mFab.setOnClickListener(v -> {
+            final String currentcity = (String) BmobUser.getObjectByKey("city");
+
+            if (currentcity.isEmpty()) {
+                toast("请到个人页面完善信息！");
+            } else {
+                ConfirmCancelDialog dialog = ConfirmCancelDialog.getInstance(BookDetailActivity.this,
+                        new ConfirmCancelDialog.DialogSetListener() {
+                            @Override
+                            public void setDialog(TextView title, TextView message, Button leftBtn, Button betBtn, Button rightBtn) {
+                                title.setText("确认");
+                                message.setText("您要对《" + mBookInfoResponse.getTitle() + "》进行什么操作？");
+                                message.setGravity(Gravity.CENTER);
+                                leftBtn.setText("我要漂流");
+                                betBtn.setText("我要收藏");
+                                rightBtn.setText("取消");
+                            }
+                        });
+                dialog.setDialogClickListener(new ConfirmCancelDialog.DialogClickListener() {
+                    @Override
+                    public void leftClickListener() {
+
+                        CrossInfo crossinfo = new CrossInfo();
+                        MyUser userInfo = BmobUser.getCurrentUser(MyUser.class);
 
 
-            ConfirmCancelDialog dialog = ConfirmCancelDialog.getInstance(BookDetailActivity.this,
-                    new ConfirmCancelDialog.DialogSetListener() {
-                        @Override
-                        public void setDialog(TextView title, TextView message, Button leftBtn, Button betBtn, Button rightBtn) {
-                            title.setText("确认");
-                            message.setText("您要对《" + mBookInfoResponse.getTitle() + "》进行什么操作？");
-                            message.setGravity(Gravity.CENTER);
-                            leftBtn.setText("我要漂流");
-                            betBtn.setText("我要收藏");
-                            rightBtn.setText("取消");
-                        }
-                    });
-            dialog.setDialogClickListener(new ConfirmCancelDialog.DialogClickListener() {
-                @Override
-                public void leftClickListener() {
-
-                    CrossInfo crossinfo = new CrossInfo();
-                    MyUser userInfo = BmobUser.getCurrentUser(MyUser.class);
+                        //为crosscode统计个数
+                        BmobQuery<CrossInfo> querynum = new BmobQuery<CrossInfo>();
+                        querynum.addQueryKeys("objectId");
+                        querynum.count(CrossInfo.class, new CountListener() {
+                            @Override
+                            public void done(Integer count, BmobException e) {
+                                if(e==null){
+                                    num = count;
+                                    KLog.e("bmob", "count对象个数为：" + num);
+                                }else{
+                                    num = 0;
+                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                }
+                            }
+                        });
 
 
-                    //Bmob复合查询
-                    BmobQuery<CrossInfo> eq1 = new BmobQuery<CrossInfo>();
-                    eq1.addWhereEqualTo("crossuser", userInfo.getUsername());
+                        //Bmob复合查询不允许用户重复漂流同一本书
+                        BmobQuery<CrossInfo> eq1 = new BmobQuery<CrossInfo>();
+                        eq1.addWhereEqualTo("crossuser", userInfo.getUsername());
 
-                    BmobQuery<CrossInfo> eq2 = new BmobQuery<CrossInfo>();
-                    eq2.addWhereEqualTo("isbn", mBookInfoResponse.getIsbn13());
+                        BmobQuery<CrossInfo> eq2 = new BmobQuery<CrossInfo>();
+                        eq2.addWhereEqualTo("isbn", mBookInfoResponse.getIsbn13());
 
-                    List<BmobQuery<CrossInfo>> andQuerys = new ArrayList<BmobQuery<CrossInfo>>();
-                    andQuerys.add(eq1);
-                    andQuerys.add(eq2);
+                        List<BmobQuery<CrossInfo>> andQuerys = new ArrayList<BmobQuery<CrossInfo>>();
+                        andQuerys.add(eq1);
+                        andQuerys.add(eq2);
 
-                    BmobQuery<CrossInfo> query = new BmobQuery<CrossInfo>();
-                    query.and(andQuerys);
-                    query.findObjects(new FindListener<CrossInfo>() {
-                        @Override
-                        public void done(List<CrossInfo> object, BmobException e) {
-                            KLog.e("bmob", "List：" + object.isEmpty());
-                            if (e==null) {
-                                if (object.isEmpty()) {
-                                    crossinfo.setIsbn(mBookInfoResponse.getIsbn13());
-                                    crossinfo.setCrossuser(userInfo.getUsername());
-                                    crossinfo.setCrosscity(userInfo.getCity());
+                        BmobQuery<CrossInfo> query = new BmobQuery<CrossInfo>();
+                        query.and(andQuerys);
+                        query.findObjects(new FindListener<CrossInfo>() {
+                            @Override
+                            public void done(List<CrossInfo> object, BmobException e) {
+                                KLog.e("bmob", "List：" + object.isEmpty());
+                                if (e == null) {
+                                    if (object.isEmpty()) {
+                                        crossinfo.setIsbn(mBookInfoResponse.getIsbn13());
+                                        crossinfo.setCrossuser(userInfo.getUsername());
+                                        crossinfo.setCrosscity(userInfo.getCity());
+                                        KLog.e("bmob", "表里有多少条数据" + num);
+                                        crossinfo.setCrosscode(num + 1);
 
-                                    {
-                                        crossinfo.save(new SaveListener<String>() {
-                                            @Override
-                                            public void done(String objectId, BmobException e) {
-                                                if (e == null) {
-                                                    toast("您的《" + mBookInfoResponse.getTitle() + "》已开始漂流！");
-                                                } else {
-                                                    toast("创建数据失败：" + e.getMessage());
-                                                    KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                        {
+                                            crossinfo.save(new SaveListener<String>() {
+                                                @Override
+                                                public void done(String objectId, BmobException e) {
+                                                    if (e == null) {
+                                                        toast("您的《" + mBookInfoResponse.getTitle() + "》已开始漂流！");
+                                                    } else {
+                                                        toast("创建数据失败：" + e.getMessage());
+                                                        KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                        }
+                                    } else {
+                                        toast("您已漂流过该书籍");
                                     }
                                 } else {
-                                    toast("您已漂流过该书籍" );
+                                    KLog.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                                 }
-                            }else {
-                                KLog.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
                             }
+                        });
+                    }
 
-                        }
-                    });
-
-
-                }
-
-                @Override
-                public void betClickListener() {
+                    @Override
+                    public void betClickListener() {
 
 //                    CrossInfo crossinfo = new CrossInfo();
-                    MyUser userInfo = BmobUser.getCurrentUser(MyUser.class);
+                        MyUser userInfo = BmobUser.getCurrentUser(MyUser.class);
 
 
-                    //Bmob复合查询
-                    BmobQuery<MyUser> eq1 = new BmobQuery<MyUser>();
-                    eq1.addWhereEqualTo("username", userInfo.getUsername());
-                    String [] isbn = {mBookInfoResponse.getIsbn13()};
-                    BmobQuery<MyUser> eq2 = new BmobQuery<MyUser>();
-                    eq2.addWhereContainsAll("wish", Arrays.asList(isbn));
+                        //Bmob复合查询
+                        BmobQuery<MyUser> eq1 = new BmobQuery<MyUser>();
+                        eq1.addWhereEqualTo("username", userInfo.getUsername());
+                        String[] isbn = {mBookInfoResponse.getIsbn13()};
+                        BmobQuery<MyUser> eq2 = new BmobQuery<MyUser>();
+                        eq2.addWhereContainsAll("wish", Arrays.asList(isbn));
 
-                    List<BmobQuery<MyUser>> andQuerys = new ArrayList<BmobQuery<MyUser>>();
-                    andQuerys.add(eq1);
-                    andQuerys.add(eq2);
+                        List<BmobQuery<MyUser>> andQuerys = new ArrayList<BmobQuery<MyUser>>();
+                        andQuerys.add(eq1);
+                        andQuerys.add(eq2);
 
-                    BmobQuery<MyUser> query = new BmobQuery<MyUser>();
-                    query.and(andQuerys);
-                    query.findObjects(new FindListener<MyUser>() {
-                        @Override
-                        public void done(List<MyUser> object, BmobException e) {
-                            KLog.e("bmob", "List：" + object.isEmpty());
-                            if (e==null) {
-                                if (object.isEmpty()) {
-                                    userInfo.add("wish",isbn[0]);
-                                    {
-                                        userInfo.update(new UpdateListener() {
+                        BmobQuery<MyUser> query = new BmobQuery<MyUser>();
+                        query.and(andQuerys);
+                        query.findObjects(new FindListener<MyUser>() {
+                            @Override
+                            public void done(List<MyUser> object, BmobException e) {
+                                KLog.e("bmob", "List：" + object.isEmpty());
+                                if (e == null) {
+                                    if (object.isEmpty()) {
+                                        userInfo.add("wish", isbn[0]);
+                                        {
+                                            userInfo.update(new UpdateListener() {
 
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if(e==null){
-                                                    toast("您已成功收藏《" + mBookInfoResponse.getTitle() + "》！");
+                                                @Override
+                                                public void done(BmobException e) {
+                                                    if (e == null) {
+                                                        toast("您已成功收藏《" + mBookInfoResponse.getTitle() + "》！");
 
-                                                }else{
-                                                    toast("创建数据失败：" + e.getMessage());
-                                                    KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                                    } else {
+                                                        toast("创建数据失败：" + e.getMessage());
+                                                        KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                                    }
                                                 }
-                                            }
 
-                                        });
+                                            });
 //                                        userInfo.save(new SaveListener<String>() {
 //                                            @Override
 //                                            public void done(String objectId, BmobException e) {
@@ -248,28 +274,27 @@ public class BookDetailActivity extends BaseActivity implements IBookDetailView 
 //                                                }
 //                                            }
 //                                        });
+                                        }
+                                    } else {
+                                        toast("您已收藏过该书籍");
                                     }
                                 } else {
-                                    toast("您已收藏过该书籍" );
+                                    KLog.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                                 }
-                            }else {
-                                KLog.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+
                             }
-
-                        }
-                    });
+                        });
 
 
-                }
+                    }
 
-                @Override
-                public void rightClickListener() {
-                    Toast.makeText(BookDetailActivity.this, "您取消了漂流", Toast.LENGTH_SHORT).show();
-                }
-
-            });
-            dialog.show(getSupportFragmentManager(), "confirmCancelDialog");
-
+                    @Override
+                    public void rightClickListener() {
+                        Toast.makeText(BookDetailActivity.this, "您取消了漂流", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.show(getSupportFragmentManager(), "confirmCancelDialog");
+            }
 
 //            Intent intent = new Intent(BookDetailActivity.this, WebViewActivity.class);
 //            intent.putExtra("url", mBookInfoResponse.getUrl());

@@ -3,6 +3,7 @@ package com.bcing.entity;
 import java.util.List;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * Created by chinshry on 2018/3/14.
@@ -19,6 +20,15 @@ public class MyUser extends BmobUser{
     private String city;
     private String desc;
     private List<String> wish;
+    private BmobFile userimg;
+
+    public BmobFile getUserimg() {
+        return userimg;
+    }
+
+    public void setUserimg(BmobFile userimg) {
+        this.userimg = userimg;
+    }
 
     public int getAge() {
         return age;
@@ -52,10 +62,6 @@ public class MyUser extends BmobUser{
         this.city = city;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
     public void setWish(List wish) {
         this.wish = wish;
     }
@@ -64,6 +70,9 @@ public class MyUser extends BmobUser{
         return wish;
     }
 
+    public String getDesc() {
+        return desc;
+    }
     public void setDesc(String desc) {
         this.desc = desc;
     }

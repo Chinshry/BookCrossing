@@ -53,6 +53,7 @@
     <string name="myset">我的放漂</string>
     <string name="mysearch">我的求漂</string>
     <string name="my_wish">我的收藏</string>
+    <string name="cross_trail">查看漂流轨迹</string>
 
     <array name="my_cross_tab">
         <item>我的放漂@dream@0</item>

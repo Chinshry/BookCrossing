@@ -1,6 +1,6 @@
 package com.bcing.entity;
 
-import java.lang.reflect.Array;
+import java.util.List;
 
 import cn.bmob.v3.BmobObject;
 
@@ -13,8 +13,8 @@ public class WantCrossInfo extends BmobObject {
     private Number crosscode;
     private String isbn;
     private String ownuser;
-    private Array wantuser;
-    private Array wantusercity;
+    private List<String> wantuser;
+    private List<String> wantusercity;
 
     public Number getCrosscode() {
         return crosscode;
@@ -40,19 +40,19 @@ public class WantCrossInfo extends BmobObject {
         this.ownuser = ownuser;
     }
 
-    public Array getWantuser() {
+    public List getWantuser() {
         return wantuser;
     }
 
-    public void setWantuser(Array wantuser) {
+    public void setWantuser(List wantuser) {
         this.wantuser = wantuser;
     }
 
-    public Array getWantusercity() {
+    public List getWantusercity() {
         return wantusercity;
     }
 
-    public void setWantusercity(Array wantusercity) {
+    public void setWantusercity(List wantusercity) {
         this.wantusercity = wantusercity;
     }
 }

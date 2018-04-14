@@ -3,9 +3,7 @@ package com.bcing.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 
 import com.bcing.R;
 import com.bcing.bean.http.douban.BookInfoResponse;
-import com.bcing.ui.BaseActivity;
 import com.bcing.ui.activity.BookDetailActivity;
 import com.bcing.utils.common.UIUtils;
 import com.bumptech.glide.Glide;
@@ -102,17 +99,19 @@ public class BookListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     //书籍详情
                     Intent intent = new Intent(UIUtils.getContext(), BookDetailActivity.class);
                     intent.putExtras(b);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        if (BaseActivity.activity == null) {
-                            UIUtils.startActivity(intent);
-                            return;
-                        }
-                        ActivityOptionsCompat options = ActivityOptionsCompat.
-                                makeSceneTransitionAnimation(BaseActivity.activity, ((BookListHolder) holder).iv_book_img, "book_img");
-                        BaseActivity.activity.startActivity(intent, options.toBundle());
-                    } else {
-                        UIUtils.startActivity(intent);
-                    }
+
+                    UIUtils.startActivity(intent);
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        if (BaseActivity.activity == null) {
+//                            UIUtils.startActivity(intent);
+//                            return;
+//                        }
+//                        ActivityOptionsCompat options = ActivityOptionsCompat.
+//                                makeSceneTransitionAnimation(BaseActivity.activity, ((BookListHolder) holder).iv_book_img, "book_img");
+//                        BaseActivity.activity.startActivity(intent, options.toBundle());
+//                    } else {
+//                        UIUtils.startActivity(intent);
+//                    }
                 }
             });
         }

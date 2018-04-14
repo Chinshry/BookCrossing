@@ -114,24 +114,33 @@ public class OneFragment extends LazyFragment {
                     KLog.e("TAG", "第一条 " + object.get(2).getIsbn());
                     for (CrossInfo CrossInformation : object) {
                         Log.i("bmob", "CrossInfo CrossInformation : object" );
+
                         analysisUrl(CrossInformation);
+
                     }
                 } else {
                     Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
         });
+
+
+
+
     }
 
     private void analysisUrl(CrossInfo CrossInformation){
         //解析接口
         String url = URL.HOST_URL_DOUBAN_ISBN + CrossInformation.getIsbn();
+        String crossuser = CrossInformation.getCrossuser();
+        String crosscity = CrossInformation.getCrosscity();
+
         KLog.e("TAG", "for循环 " + url);
         RxVolley.get(url, new HttpCallback() {
             @Override
             public void onSuccess(String t) {
                 //Toast.makeText(getActivity(),t,Toast.LENGTH_LONG).show();
-                parsingJson(t);
+                parsingJson(t,crossuser,crosscity);
                 KLog.e("TAG", "onSuccess");
             }
         });
@@ -139,7 +148,7 @@ public class OneFragment extends LazyFragment {
 
 
     //解析json
-    private void parsingJson(String t) {
+    private void parsingJson(String t, String crossuser, String crosscity) {
         try {
             JSONObject jsonObject = new JSONObject(t);
             JSONArray jsonAuthor = jsonObject.getJSONArray("author");
@@ -148,11 +157,12 @@ public class OneFragment extends LazyFragment {
 
             bookData.setIsbn(jsonObject.getString("isbn13"));
 
-            bookData.setUsername(userInfo.getUsername());
+            bookData.setUsername(crossuser);
+            bookData.setcity(crosscity);
+
             bookData.setBookName(jsonObject.getString("title"));
             bookData.setAuthor((String) jsonAuthor.get(0));
             bookData.setpublish(jsonObject.getString("publisher"));
-            bookData.setcity(userInfo.getCity());
             bookData.setBookImage(jsonObject.getString("image"));
             bookData.setPubdate(jsonObject.getString("pubdate"));
             bookData.setPages(jsonObject.getString("pages"));
@@ -181,7 +191,7 @@ public class OneFragment extends LazyFragment {
     }
 
     public void refreshBook() {
-        KLog.e("TAG", "refreshBook开始清空" + HomeBookList.get(0).getcity());
+        KLog.e("TAG", "refreshBook开始清空");
 
         new Thread(() -> {
             KLog.e("TAG", "Thread");

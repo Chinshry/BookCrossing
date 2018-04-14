@@ -26,6 +26,9 @@ public class CrossBookData implements Serializable {
     private int crosscode;
 
 
+
+    private String createdAt;
+
 //    public BookListInfo(String username, String bookName, String author, String publish,
 //                          String city, String bookImage) {
 //        this.username = username;
@@ -114,7 +117,7 @@ public class CrossBookData implements Serializable {
     }
 
     public void setPages(String pages) {
-        this.pubdate = pages;
+        this.pages = pages;
     }
 
     public String getPubdate() {
@@ -139,6 +142,14 @@ public class CrossBookData implements Serializable {
 
     public void setCrosscode(int crosscode) {
         this.crosscode = crosscode;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
 }

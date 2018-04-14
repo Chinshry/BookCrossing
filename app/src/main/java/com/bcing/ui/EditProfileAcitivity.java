@@ -1,6 +1,7 @@
 package com.bcing.ui;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -18,18 +19,23 @@ import com.bcing.dialog.CustomDialog;
 import com.bcing.entity.MyUser;
 import com.bcing.utils.L;
 import com.bcing.utils.UtilTools;
+import com.socks.library.KLog;
 
 import java.io.File;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
 import cn.qqtheme.framework.picker.OptionPicker;
 import cn.qqtheme.framework.widget.WheelView;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.kymjs.rxvolley.toolbox.RxVolleyContext.toast;
 
 /**
  * Created by chinshry on 2018/3/14.
@@ -112,13 +118,21 @@ public class EditProfileAcitivity extends BaseActivity implements View.OnClickLi
         MyUser userInfo = BmobUser.getCurrentUser(MyUser.class);
         et_nick.setText(userInfo.getUsername());
         et_mail.setText(userInfo.getEmail());
-
-        if (userInfo.getSex()) {
-            et_sex.setText("男");
-        } else {
-            et_sex.setText("女");
+        if (userInfo.getSex()!=null){
+            if (userInfo.getSex()) {
+                et_sex.setText("男");
+            } else {
+                et_sex.setText("女");
+            }
+        }else {
+            et_sex.setText("请选择");
         }
-        et_city.setText(userInfo.getCity());
+
+        if (userInfo.getCity()!=null){
+            et_city.setText(userInfo.getCity());
+        }else {
+            et_city.setText("请选择");
+        }
 
     }
 
@@ -210,11 +224,28 @@ public class EditProfileAcitivity extends BaseActivity implements View.OnClickLi
         if (requestCode != 0) {
             switch (requestCode) {
                 case IMAGE_REQUEST_CODE:
-                    startPhotoZoom(data.getData());
+                    Uri albumUri=data.getData();
+                    startPhotoZoom(albumUri);
+                    //以下方法将获取的uri转为String类型
+                    String []albumImgs={MediaStore.Images.Media.DATA};//将图片URI转换成存储路径
+                    Cursor albumCursor=this.managedQuery(albumUri, albumImgs, null, null, null);
+                    int index0=albumCursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    albumCursor.moveToFirst();
+                    String albumImg_url=albumCursor.getString(index0);
+//                    upload(albumImg_url);
                     break;
                 case CAMERA_REQUEST_CODE:
+
                     tempFile = new File(Environment.getExternalStorageDirectory(), PHOTO_IMAGE_FILENAME);
-                    startPhotoZoom(Uri.fromFile(tempFile));
+                    Uri cameralUri=Uri.fromFile(tempFile);
+                    startPhotoZoom(cameralUri);
+                    //以下方法将获取的uri转为String类型哦。
+                    String []cameraImgs={MediaStore.Images.Media.DATA};//将图片URI转换成存储路径
+                    Cursor cameraCursor=this.managedQuery(cameralUri, cameraImgs, null, null, null);
+                    int index1=cameraCursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    cameraCursor.moveToFirst();
+                    String cameraImg_url=cameraCursor.getString(index1);
+//                    upload(cameraImg_url);
                     break;
                 case RESULT_REQUEST_CODE:
                     //有可能点击舍弃
@@ -222,11 +253,15 @@ public class EditProfileAcitivity extends BaseActivity implements View.OnClickLi
                         //拿到图片设置
                         setImageToView(data);
                         L.e("setted");
-                        //既然已经设置图片 原先的就应该删除
+
+
+
+                        //既然已经设置图片 原先相册拍的的就应该删除
                         if (tempFile != null) {
                             tempFile.delete();
                             L.e("delect");
                         }
+                        L.e("拿到图片了");
                     }
                     break;
             }
@@ -253,6 +288,32 @@ public class EditProfileAcitivity extends BaseActivity implements View.OnClickLi
         //发送数据
         intent.putExtra("return-data", true);
         startActivityForResult(intent, RESULT_REQUEST_CODE);
+    }
+
+    /**
+     * 将图片上传
+     * @param imgpath
+     */
+    private void upload(String imgpath){
+        final BmobFile userimage = new BmobFile(new File(imgpath));
+        userimage.uploadblock(new UploadFileListener() {
+
+            @Override
+            public void done(BmobException e) {
+                if(e==null){
+//                    MyUser user = new MyUser();
+//                user.setUserimg(userimage);
+//                user.save(.this);
+//                showToast("图片上传成功");
+                    //bmobFile.getFileUrl()--返回的上传文件的完整地址
+                    toast("上传文件成功" );
+                    KLog.e("TAG", userimage.getFileUrl());
+
+                }else{
+                    toast("上传文件失败：" + e.getMessage());
+                }
+            }
+        });
     }
 
     //设置图片

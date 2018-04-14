@@ -50,7 +50,7 @@ import butterknife.OnClick;
  * created at 2016/6/20 13:41
  * description：
  */
-public class MainActivity extends AutoLayoutActivity  {
+public class MainActivity extends AutoLayoutActivity {
     @BindView(R.id.m_main_viewpager)
     ViewPager mMainViewPager;
     @BindView(R.id.m_main_fw_btn_true)
@@ -156,6 +156,8 @@ public class MainActivity extends AutoLayoutActivity  {
 
 
     }
+
+
 
 //    private void setupViewPager(ViewPager viewPager) {
 //        adapter = new MyViewPagerAdapter(getSupportFragmentManager(), this);

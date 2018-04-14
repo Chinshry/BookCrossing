@@ -2,7 +2,6 @@ package com.bcing.ui;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
@@ -87,15 +86,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void initSystemBar(Activity activity) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                setTranslucentStatus(activity, true);
-            }
-            SystemBarTintManager tintManager = new SystemBarTintManager(activity);
-            tintManager.setStatusBarTintEnabled(true);
-            // 使用颜色资源
-            tintManager.setStatusBarTintResource(getStatusColor());
-        }
+        //沉浸式状态栏
+        setTranslucentStatus(activity, true);
+        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+        tintManager.setStatusBarTintEnabled(true);
+        // 使用颜色资源
+        tintManager.setStatusBarTintResource(getStatusColor());
+
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//                setTranslucentStatus(activity, true);
+//            }
+//            SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+//            tintManager.setStatusBarTintEnabled(true);
+//            // 使用颜色资源
+//            tintManager.setStatusBarTintResource(getStatusColor());
+//        }
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.bcing.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +56,14 @@ public class CrossBookDetailActivity extends BaseActivity {
     TextView tv_book_summary;
     FloatingActionButton fab;
 
+    TextView username;
+    TextView city;
+    TextView date;
+
+
+    WebView webview;
+    Button btn_echart;
+
     private CrossBookData mCrossBookInfo;
 
 
@@ -61,10 +71,13 @@ public class CrossBookDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crossbook_detail);
+
         initView();
     }
 
     private void initView() {
+
+
         tv_crosscode = (TextView) findViewById(R.id.tv_crosscode);
         book_img = (ImageView) findViewById(R.id.book_img);
         tv_book_title = (TextView) findViewById(R.id.tv_book_title);
@@ -75,8 +88,28 @@ public class CrossBookDetailActivity extends BaseActivity {
         tv_book_summary = (TextView) findViewById(R.id.tv_book_summary);
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
+        username = (TextView) findViewById(R.id.username);
+        city = (TextView) findViewById(R.id.city);
+        date = (TextView) findViewById(R.id.date);
+
+
+
+        btn_echart = (Button) findViewById(R.id.btn_echart);
+        webview = (WebView) findViewById(R.id.webview);
+
+        btn_echart.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(activity, EChartActivity.class));
+            }
+        });
+
         mCrossBookInfo = (CrossBookData) getIntent().getSerializableExtra(CrossBookData.serialVersionName);
         setTitle(mCrossBookInfo.getBookName());
+        username.setText( mCrossBookInfo.getUsername());
+        city.setText(mCrossBookInfo.getcity());
 
         KLog.e("TAG", mCrossBookInfo.getBookName() + mCrossBookInfo.getcity());
 
@@ -99,8 +132,13 @@ public class CrossBookDetailActivity extends BaseActivity {
                 if (e == null) {
                     for (CrossInfo crossinforesult : object) {
                         mCrossBookInfo.setCrosscode(crossinforesult.getCrosscode());
+                        mCrossBookInfo.setCreatedAt(crossinforesult.getCreatedAt());
                         KLog.e("TAG", "getCrosscode：" + crossinforesult.getCrosscode());
+                        KLog.e("TAG", "getCreatedAt：" + crossinforesult.getCreatedAt());
+
                         tv_crosscode.setText("漂流码: " + String.format("%05d", mCrossBookInfo.getCrosscode()));
+                        date.setText("放漂时间: " + ((String)mCrossBookInfo.getCreatedAt()).substring(0,10));
+
                     }
 
                 } else {
@@ -119,157 +157,139 @@ public class CrossBookDetailActivity extends BaseActivity {
         tv_book_summary.setText(mCrossBookInfo.getSummary());
 
         fab.setOnClickListener(v -> {
-//            BmobQuery<MyUser> queryuser = new BmobQuery<MyUser>();
-//            final MyUser myUser = new MyUser();
-//            queryuser.getObject("7e9978cf8c", new QueryListener<MyUser>() {
-//                @Override
-//                public void done(MyUser object, BmobException e) {
-//                    if (e == null) {
-//                        //获得playerName的信息
-//                        object.getUsername();
-//                        myUser.setUsername(object.getUsername());
-//                        myUser.setCity(object.getCity());
-//
-//
-//                        KLog.e("bmob", "done内 本用户名为：" + object.getUsername());
-//                        KLog.e("bmob", "done内 本用户名为：" + myUser.getUsername());
-//
-//                    } else {
-//                        KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-//                    }
-//                }
-//            });
-
-
-//            if (){
-//
-//            }else {
-//            }
-
             final String currentusername = (String) BmobUser.getObjectByKey("username");
             final String currentcity = (String) BmobUser.getObjectByKey("city");
 
-            KLog.e("TAG", "用户名还在吗" + currentusername + currentcity);
+            KLog.e("TAG", "用户信息还在吗" + currentusername + currentcity);
+            KLog.e("TAG", "用户信息还在吗" + currentusername + currentcity);
 
-            ConfirmCancelDialog dialog = ConfirmCancelDialog.getInstance(CrossBookDetailActivity.this,
-                    new ConfirmCancelDialog.DialogSetListener() {
+            if (currentcity.isEmpty()) {
+                toast("请到个人页面完善信息！");
+            } else {
+                ConfirmCancelDialog dialog = ConfirmCancelDialog.getInstance(CrossBookDetailActivity.this,
+                        new ConfirmCancelDialog.DialogSetListener() {
+                            @Override
+                            public void setDialog(TextView title, TextView message, Button leftBtn, Button betBtn, Button rightBtn) {
+                                title.setText("确认");
+                                message.setText("您确定要求漂《" + mCrossBookInfo.getBookName() + "》吗？");
+                                message.setGravity(Gravity.CENTER);
+                                leftBtn.setText("确定求漂");
+                                betBtn.setText("先收藏");
+                                rightBtn.setText("取消");
+                            }
+                        });
+                dialog.setDialogClickListener(new ConfirmCancelDialog.DialogClickListener() {
+                    @Override
+                    public void leftClickListener() {
 
-                        @Override
-                        public void setDialog(TextView title, TextView message, Button leftBtn, Button betBtn, Button rightBtn) {
-                            title.setText("确认");
-                            message.setText("您确定要求漂《" + mCrossBookInfo.getBookName() + "》吗？");
-                            message.setGravity(Gravity.CENTER);
-                            leftBtn.setText("确定求漂");
-                            betBtn.setText("先收藏");
-                            rightBtn.setText("取消");
-                        }
-                    });
-            dialog.setDialogClickListener(new ConfirmCancelDialog.DialogClickListener() {
-                @Override
-                public void leftClickListener() {
+                        WantCrossInfo wantCrossInfo = new WantCrossInfo();
+//                    Bmob复合查询
+                        BmobQuery<WantCrossInfo> eq1 = new BmobQuery<WantCrossInfo>();
+                        eq1.addWhereEqualTo("wantuser", currentusername);
 
-                    WantCrossInfo wantCrossInfo = new WantCrossInfo();
-                    String [] array = {currentusername};
-                    //Bmob复合查询
-//                    BmobQuery<WantCrossInfo> eq1 = new BmobQuery<WantCrossInfo>();
-//                    eq1.addWhereContainsAll("wantuser", Arrays.asList(array));
+                        BmobQuery<WantCrossInfo> eq2 = new BmobQuery<WantCrossInfo>();
+                        eq2.addWhereEqualTo("isbn", mCrossBookInfo.getIsbn());
 
-                    BmobQuery<WantCrossInfo> eq2 = new BmobQuery<WantCrossInfo>();
-                    eq2.addWhereEqualTo("isbn", mCrossBookInfo.getIsbn());
+                        BmobQuery<WantCrossInfo> eq3 = new BmobQuery<WantCrossInfo>();
+                        eq3.addWhereEqualTo("ownuser", mCrossBookInfo.getUsername());
 
-                    BmobQuery<WantCrossInfo> eq3 = new BmobQuery<WantCrossInfo>();
-                    eq3.addWhereEqualTo("ownuser", mCrossBookInfo.getUsername());
+                        List<BmobQuery<WantCrossInfo>> andQuerys = new ArrayList<BmobQuery<WantCrossInfo>>();
+                        andQuerys.add(eq1);
+                        andQuerys.add(eq2);
+                        andQuerys.add(eq3);
 
-                    List<BmobQuery<WantCrossInfo>> andQuerys = new ArrayList<BmobQuery<WantCrossInfo>>();
-//                    andQuerys.add(eq1);
-                    andQuerys.add(eq2);
-                    andQuerys.add(eq3);
+                        BmobQuery<WantCrossInfo> query = new BmobQuery<WantCrossInfo>();
+                        query.and(andQuerys);
+                        query.findObjects(new FindListener<WantCrossInfo>() {
+                            @Override
+                            public void done(List<WantCrossInfo> object, BmobException e) {
+                                if (e == null) {
+                                    KLog.e("TAG", "持有者用户名" + mCrossBookInfo.getUsername() + "想要者的用户名" + currentusername);
+                                    //求漂的不是自己放漂的书籍
+                                    if (!(mCrossBookInfo.getUsername().equals(currentusername))) {
+                                        if (object.isEmpty()) {
+                                            KLog.e("bmob", "List：" + object.isEmpty());
+                                            wantCrossInfo.setIsbn(mCrossBookInfo.getIsbn());
+                                            wantCrossInfo.setCrosscode(mCrossBookInfo.getCrosscode());
+                                            wantCrossInfo.setOwnuser(mCrossBookInfo.getUsername());
+                                            wantCrossInfo.add("wantuser", currentusername);
+                                            wantCrossInfo.add("wantusercity", currentcity);
 
-                    BmobQuery<WantCrossInfo> query = new BmobQuery<WantCrossInfo>();
-                    query.and(andQuerys);
-                    query.findObjects(new FindListener<WantCrossInfo>() {
-                        @Override
-                        public void done(List<WantCrossInfo> object, BmobException e) {
-
-                            if (e == null) {
-                                if (object.isEmpty()) {
-                                    KLog.e("bmob", "List：" + object.isEmpty());
-                                    wantCrossInfo.setIsbn(mCrossBookInfo.getIsbn());
-                                    wantCrossInfo.setCrosscode(mCrossBookInfo.getCrosscode());
-                                    wantCrossInfo.setOwnuser(mCrossBookInfo.getUsername());
-                                    wantCrossInfo.add("wantuser", currentusername);
-                                    wantCrossInfo.add("wantusercity", currentcity);
-
-                                    {
-                                        wantCrossInfo.save(new SaveListener<String>() {
-                                            @Override
-                                            public void done(String objectId, BmobException e) {
-                                                if (e == null) {
-                                                    toast("您已成功求漂《" + mCrossBookInfo.getBookName() + "》已开始漂流！");
-                                                } else {
-                                                    toast("创建数据失败：" + e.getMessage());
-                                                    KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
+                                            {
+                                                wantCrossInfo.save(new SaveListener<String>() {
+                                                    @Override
+                                                    public void done(String objectId, BmobException e) {
+                                                        if (e == null) {
+                                                            toast("您已成功求漂《" + mCrossBookInfo.getBookName() + "》！");
+                                                        } else {
+                                                            toast("创建数据失败：" + e.getMessage());
+                                                            KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                                        }
+                                                    }
+                                                });
                                             }
-                                        });
+
+
+                                        } else {
+                                            toast("您已求漂过该书籍");
+                                        }
+                                    } else {
+                                        toast("不能求漂自己的书籍");
+
                                     }
 
-
                                 } else {
-                                    toast("您已求漂过该书籍");
+                                    KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                                 }
-                            } else {
-                                KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+
                             }
-
-                        }
-                    });
+                        });
 
 
-                }
+                    }
 
-                @Override
-                public void betClickListener() {
+                    @Override
+                    public void betClickListener() {
 
 //                    CrossInfo crossinfo = new CrossInfo();
-                    MyUser userInfo = BmobUser.getCurrentUser(MyUser.class);
+                        MyUser userInfo = BmobUser.getCurrentUser(MyUser.class);
 
 
-                    //Bmob复合查询
-                    BmobQuery<MyUser> eq1 = new BmobQuery<MyUser>();
-                    eq1.addWhereEqualTo("username", userInfo.getUsername());
-                    String[] isbn = {mCrossBookInfo.getIsbn()};
-                    BmobQuery<MyUser> eq2 = new BmobQuery<MyUser>();
-                    eq2.addWhereContainsAll("wish", Arrays.asList(isbn));
+                        //Bmob复合查询
+                        BmobQuery<MyUser> eq1 = new BmobQuery<MyUser>();
+                        eq1.addWhereEqualTo("username", userInfo.getUsername());
+                        String[] isbn = {mCrossBookInfo.getIsbn()};
+                        BmobQuery<MyUser> eq2 = new BmobQuery<MyUser>();
+                        eq2.addWhereContainsAll("wish", Arrays.asList(isbn));
 
-                    List<BmobQuery<MyUser>> andQuerys = new ArrayList<BmobQuery<MyUser>>();
-                    andQuerys.add(eq1);
-                    andQuerys.add(eq2);
+                        List<BmobQuery<MyUser>> andQuerys = new ArrayList<BmobQuery<MyUser>>();
+                        andQuerys.add(eq1);
+                        andQuerys.add(eq2);
 
-                    BmobQuery<MyUser> query = new BmobQuery<MyUser>();
-                    query.and(andQuerys);
-                    query.findObjects(new FindListener<MyUser>() {
-                        @Override
-                        public void done(List<MyUser> object, BmobException e) {
-                            KLog.e("bmob", "List：" + object.isEmpty());
-                            if (e == null) {
-                                if (object.isEmpty()) {
-                                    userInfo.add("wish", isbn[0]);
-                                    {
-                                        userInfo.update(new UpdateListener() {
+                        BmobQuery<MyUser> query = new BmobQuery<MyUser>();
+                        query.and(andQuerys);
+                        query.findObjects(new FindListener<MyUser>() {
+                            @Override
+                            public void done(List<MyUser> object, BmobException e) {
+                                KLog.e("bmob", "List：" + object.isEmpty());
+                                if (e == null) {
+                                    if (object.isEmpty()) {
+                                        userInfo.add("wish", isbn[0]);
+                                        {
+                                            userInfo.update(new UpdateListener() {
 
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    toast("您已成功收藏《" + mCrossBookInfo.getBookName() + "》！");
+                                                @Override
+                                                public void done(BmobException e) {
+                                                    if (e == null) {
+                                                        toast("您已成功收藏《" + mCrossBookInfo.getBookName() + "》！");
 
-                                                } else {
-                                                    toast("创建数据失败：" + e.getMessage());
-                                                    KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                                    } else {
+                                                        toast("创建数据失败：" + e.getMessage());
+                                                        KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                                    }
                                                 }
-                                            }
 
-                                        });
+                                            });
 //                                        userInfo.save(new SaveListener<String>() {
 //                                            @Override
 //                                            public void done(String objectId, BmobException e) {
@@ -281,28 +301,28 @@ public class CrossBookDetailActivity extends BaseActivity {
 //                                                }
 //                                            }
 //                                        });
+                                        }
+                                    } else {
+                                        toast("您已收藏过该书籍");
                                     }
                                 } else {
-                                    toast("您已收藏过该书籍");
+                                    KLog.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                                 }
-                            } else {
-                                KLog.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+
                             }
-
-                        }
-                    });
+                        });
 
 
-                }
+                    }
 
-                @Override
-                public void rightClickListener() {
-                    Toast.makeText(CrossBookDetailActivity.this, "您取消了操作", Toast.LENGTH_SHORT).show();
-                }
+                    @Override
+                    public void rightClickListener() {
+                        Toast.makeText(CrossBookDetailActivity.this, "您取消了操作", Toast.LENGTH_SHORT).show();
+                    }
 
-            });
-            dialog.show(getSupportFragmentManager(), "confirmCancelDialog");
-
+                });
+                dialog.show(getSupportFragmentManager(), "confirmCancelDialog");
+            }
 
 //            Intent intent = new Intent(BookDetailActivity.this, WebViewActivity.class);
 //            intent.putExtra("url", mBookInfoResponse.getUrl());

@@ -4,19 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+
             app:titleTextColor="@color/white" />
 
     </android.support.design.widget.AppBarLayout>
@@ -39,43 +42,13 @@
                 android:layout_gravity="center"
                 android:src="@drawable/book_image" />
 
+            <!--书籍信息-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="400dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginRight="32dp"
-                    android:layout_marginTop="20dp"
-                    android:paddingBottom="8dp"
-                    android:gravity="center"
-                    android:paddingTop="8dp">
-
-                    <Button
-                        android:id="@+id/tv_crosscode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:text="漂流码："
-                        android:textSize="20sp"
-                        android:textColor="#787878" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="点击查看漂流轨迹" />
-
-
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rl_more_info"
@@ -195,6 +168,101 @@
 
             </LinearLayout>
 
+            <!--用户信息-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="100dp"
+                android:background="@drawable/listview_bg"
+                android:orientation="horizontal"
+                android:padding="6dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/bookset_userdp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="6"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="0dp"
+                        android:layout_marginTop="3dp"
+                        android:maxLines="1"
+                        android:text="TextView"
+                        android:textColor="#101010"
+                        android:textSize="17sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/location"
+                            android:tint="#3c3c3c" />
+
+                        <TextView
+                            android:id="@+id/city"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="TextView"
+                            android:textColor="#646464"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_crosscode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="TextView"
+                        android:textColor="#646464"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="TextView"
+                        android:textColor="#646464"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_echart"
+                    android:layout_width="65dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_bg_small"
+                    android:text="@string/cross_trail"
+                    android:textColor="@color/deepdark"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
 
         </LinearLayout>

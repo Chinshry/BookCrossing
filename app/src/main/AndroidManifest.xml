@@ -96,7 +96,10 @@
             android:name=".ui.activity.WebViewActivity"
             android:label="WebViewActivity"/>
 
-        <!-- 我漂-->
+        <!-- EChart漂流轨迹-->
+        <activity
+            android:name=".ui.activity.EChartActivity"
+            android:label="EChartActivity"/>
 
 
     </application>
