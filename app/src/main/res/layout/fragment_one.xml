@@ -8,9 +8,9 @@
         android:id="@+id/sv_lookup"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginBottom="6dp"
         android:background="@color/white"
         android:queryHint="@string/lookup">
-
     </SearchView>
     <!--<ListView-->
         <!--android:id="@+id/mListView"-->

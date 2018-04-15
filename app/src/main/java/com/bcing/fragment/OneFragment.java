@@ -109,9 +109,6 @@ public class OneFragment extends LazyFragment {
                         e1.printStackTrace();
                     }
                     toast("更新了" + object.size() + "条数据。最新数据时间;" + lastrefreshdate);
-                    KLog.e("TAG", "第一条 " + object.get(0).getIsbn());
-                    KLog.e("TAG", "第一条 " + object.get(1).getIsbn());
-                    KLog.e("TAG", "第一条 " + object.get(2).getIsbn());
                     for (CrossInfo CrossInformation : object) {
                         Log.i("bmob", "CrossInfo CrossInformation : object" );
 
@@ -141,7 +138,6 @@ public class OneFragment extends LazyFragment {
             public void onSuccess(String t) {
                 //Toast.makeText(getActivity(),t,Toast.LENGTH_LONG).show();
                 parsingJson(t,crossuser,crosscity);
-                KLog.e("TAG", "onSuccess");
             }
         });
     }
@@ -168,13 +164,10 @@ public class OneFragment extends LazyFragment {
             bookData.setPages(jsonObject.getString("pages"));
             bookData.setSummary(jsonObject.getString("summary"));
 
-            KLog.e("TAG", "json获取" + bookData.getBookName());
-
             HomeBookList.add(bookData);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        KLog.e("TAG", "HomeBookList 书名啦" + HomeBookList.get(0).getBookName());
 
         initRecyclerView();
         return;
@@ -225,14 +218,6 @@ public class OneFragment extends LazyFragment {
         KLog.e("TAG", "oneFragment--lazyLoad");
     }
 
-//    @Override
-//    protected void initEvents() {
-//
-//    }
-//
-//    @Override
-//    protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//
-//    }
+
 
 }

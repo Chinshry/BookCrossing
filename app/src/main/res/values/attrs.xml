@@ -6,10 +6,5 @@
         <attr name="discoverSearchBg" format="reference|color" />
     </declare-styleable>
 
-    <string-array name="main_tab_type">
-        <item>求漂</item>
-        <item>我的漂书</item>
-        <item>我的求漂</item>
-    </string-array>
 
 </resources>

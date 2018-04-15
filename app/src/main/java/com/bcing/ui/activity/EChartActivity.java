@@ -61,59 +61,71 @@ public class EChartActivity extends BaseActivity {
             @Override
             public void done(List<WantCrossInfo> object, BmobException e) {
                 if(e==null){
-                    toast("查询成功：共"+object.size()+"条数据。");
-                    for (WantCrossInfo wantCross : object) {
-                        List city = wantCross.getWantusercity();
+                    KLog.e("TAG","对象大小" + object.size());
 
-                        webview.setWebViewClient(new WebViewClient() {
-                            @Override
-                            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                                super.onPageStarted(view, url, favicon);
-                            }
+                    if (object.size()!=0){
+                        KLog.e("TAG","inten吧" );
 
-                            @Override
-                            public void onPageFinished(WebView view, String url) {
-                                super.onPageFinished(view, url);
-                                try {
-                                    //当页面加载完成后，调用js方法
-                                    JSONObject json = new JSONObject();
-                                    JsonArray array = new JsonArray();
-
-
-                                    array.add(getIntent().getStringExtra("owncity").substring(0,getIntent().getStringExtra("owncity").length()-1));
-                                    for (int i = 0; i < wantCross.getWantusercity().size(); i++) {
-                                        array.add(city.get(i).toString().substring(0,city.get(i).toString().length()-1));
-
-                                    }
-                                    json.put("BJData",array);
-                                    KLog.e("TAG","求漂者城市数组" + array);
-                                    KLog.e("TAG","求漂者城市json" + json);
-                                    webview.loadUrl("javascript:showMessage("+json.toString()+")");
-
-
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                        for (WantCrossInfo wantCross : object) {
+                            List city = wantCross.getWantusercity();
+                            webview.setWebViewClient(new WebViewClient() {
+                                @Override
+                                public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                                    super.onPageStarted(view, url, favicon);
                                 }
-                            }
-                        });
 
-                        webview.setWebChromeClient(new WebChromeClient() {
-                            @Override
-                            public void onProgressChanged(WebView view, int newProgress) {
-                                super.onProgressChanged(view, newProgress);
+                                @Override
+                                public void onPageFinished(WebView view, String url) {
+                                    super.onPageFinished(view, url);
+                                    try {
+                                        //当页面加载完成后，调用js方法
+                                        JSONObject json = new JSONObject();
+                                        JsonArray array = new JsonArray();
 
-                            }
 
-                            @Override
-                            public void onReceivedTitle(WebView view, String title) {
-                                super.onReceivedTitle(view, title);
-                            }
-                        });
+                                        array.add(getIntent().getStringExtra("owncity").substring(0,getIntent().getStringExtra("owncity").length()-1));
+                                        for (int i = 0; i < wantCross.getWantusercity().size(); i++) {
+                                            array.add(city.get(i).toString().substring(0,city.get(i).toString().length()-1));
 
-                        //加载需要显示的网页
-                        webview.loadUrl("file:///android_asset/echart.html");
+                                        }
+                                        json.put("BJData",array);
+                                        KLog.e("TAG","求漂者城市数组" + array);
+                                        KLog.e("TAG","求漂者城市json" + json);
+                                        webview.loadUrl("javascript:showMessage("+json.toString()+")");
+
+
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+
+                            webview.setWebChromeClient(new WebChromeClient() {
+                                @Override
+                                public void onProgressChanged(WebView view, int newProgress) {
+                                    super.onProgressChanged(view, newProgress);
+
+                                }
+
+                                @Override
+                                public void onReceivedTitle(WebView view, String title) {
+                                    super.onReceivedTitle(view, title);
+                                }
+                            });
+
+                            //加载需要显示的网页
+                            webview.loadUrl("file:///android_asset/echart.html");
+
+                        }
+                    } else {
+                        KLog.e("TAG","不inten了吧" );
+
+                        toast("本书还未起漂 无法查看漂流记录");
+
+
                     }
+
                 }else{
                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
                 }

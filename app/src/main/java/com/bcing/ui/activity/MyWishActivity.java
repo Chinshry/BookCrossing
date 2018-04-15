@@ -1,28 +1,31 @@
 package com.bcing.ui.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.bcing.R;
-import com.bcing.adapter.BookListAdapter;
-import com.bcing.api.IBookListView;
-import com.bcing.api.impl.BookListPresenterImpl;
-import com.bcing.bean.http.douban.BookInfoResponse;
-import com.bcing.bean.http.douban.BookListResponse;
+import com.bcing.adapter.HomeBookListAdapter;
+import com.bcing.common.URL;
+import com.bcing.entity.CrossBookData;
+import com.bcing.entity.MyUser;
 import com.bcing.ui.BaseActivity;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
 import com.socks.library.KLog;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import cn.bmob.v3.BmobUser;
+
+import static com.bcing.utils.common.UIUtils.getContext;
 
 /**
  * Created by chinshry on 2018/3/14.
@@ -33,168 +36,151 @@ import butterknife.ButterKnife;
  */
 
 
-public class MyWishActivity extends BaseActivity implements IBookListView, SwipeRefreshLayout.OnRefreshListener {
-    //接口调用参数 tag：标签，q：搜索关键词，fields：过滤词，count：一次返回数据数，
-    // page：当前已经加载的页数，PS:tag,q只存在其中一个，另一个置空
-    private static final int PRO_LOADING_SIZE = 2;//上滑加载提前N个item开始加载更多数据(暂时有bug)
-    private static final String fields = "id,title,subtitle,origin_title,rating,author,translator,publisher,pubdate,summary,images,pages,price,binding,isbn13,alt";
-    private int count = 20;
-    private int page = 0;
-    private String q;
+public class MyWishActivity extends BaseActivity {
 
-    private boolean isLoadAll;
+    private View view;
+    private SwipeRefreshLayout swipeRefresh;
+    private List<CrossBookData> HomeBookList = new ArrayList<>();
+    private HomeBookListAdapter adapter;
 
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.swipe_refresh_widget)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-
-    private GridLayoutManager mLayoutManager;
-    private BookListAdapter mListAdapter;
-    private List<BookInfoResponse> bookInfoResponses;
-    private BookListPresenterImpl bookListPresenter;
-    private int spanCount = 1;
-
-    private View view1;
+    public MyWishActivity() {
+        super();
+        KLog.e("TAG", "super");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        KLog.e("TAG", "MyWishActivity onCreate");
-        if (savedInstanceState != null) {
-            isLoadAll = savedInstanceState.getBoolean("isLoadAll");
-        }
-        setContentView(R.layout.activity_my_wish);
-        ButterKnife.bind(this);
-        super.onCreate(savedInstanceState);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_my_wish);
+
+            KLog.e("TAG", "MyWishActivity--onCreate");
+            initBookDetailData();
+            initSwipe_refresh();
     }
+
+    public void initBookDetailData() {
+        KLog.e("TAG", "MySetFragment initBookDetailData执行了");
+
+//        BmobUser bmobUser = BmobUser.getCurrentUser();
+
+        final JSONArray currentuserwish = (JSONArray) BmobUser.getObjectByKey("wish");
+        try {
+            KLog.e("TAG", "getString" + currentuserwish.getString(0));
+            if(currentuserwish.length()>0){
+                for(int i = 0; i < currentuserwish.length(); i++ ){
+//                    遍历 jsonarray 数组，把每一个对象转成 json 对象
+                    String isbn = currentuserwish.getString(i);
+                    analysisUrl(isbn);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void analysisUrl(String isbn){
+        //解析接口
+        String url = URL.HOST_URL_DOUBAN_ISBN + isbn;
+        String crossuser = (String) BmobUser.getObjectByKey("username");
+        String crosscity = (String) BmobUser.getObjectByKey("city");
+        RxVolley.get(url, new HttpCallback() {
+            @Override
+            public void onSuccess(String t) {
+                //Toast.makeText(getActivity(),t,Toast.LENGTH_LONG).show();
+
+                parsingJson(t,crossuser,crosscity);
+                KLog.e("TAG", "onSuccess");
+            }
+        });
+
+
+    }
+
+    //解析json
+    private void parsingJson(String t, String crossuser, String crosscity) {
+        try {
+            JSONObject jsonObject = new JSONObject(t);
+            JSONArray jsonAuthor = jsonObject.getJSONArray("author");
+            CrossBookData bookData = new CrossBookData();
+            MyUser userInfo = BmobUser.getCurrentUser(MyUser.class);
+
+            bookData.setIsbn(jsonObject.getString("isbn13"));
+
+            bookData.setUsername(crossuser);
+            bookData.setcity(crosscity);
+
+            bookData.setBookName(jsonObject.getString("title"));
+            bookData.setAuthor((String) jsonAuthor.get(0));
+            bookData.setpublish(jsonObject.getString("publisher"));
+            bookData.setBookImage(jsonObject.getString("image"));
+            bookData.setPubdate(jsonObject.getString("pubdate"));
+            bookData.setPages(jsonObject.getString("pages"));
+            bookData.setSummary(jsonObject.getString("summary"));
+
+            KLog.e("TAG", "json获取" + bookData.getBookName());
+
+            HomeBookList.add(bookData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        KLog.e("TAG", "HomeBookList 书名啦" + HomeBookList.get(0).getBookName());
+
+        initRecyclerView();
+        return;
+    }
+
+    public void initRecyclerView() {
+        KLog.e("TAG", "initRecyclerView");
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_View);
+        LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(LayoutManager);
+        adapter = new HomeBookListAdapter(this, HomeBookList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void initSwipe_refresh() {
+        KLog.e("TAG", "初始化刷新");
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.orange);
+        swipeRefresh.setOnRefreshListener(() -> {
+            KLog.e("TAG", "setOnRefreshListener监听到了");
+            refreshBook();
+        });
+    }
+
+    public void refreshBook() {
+        KLog.e("TAG", "refreshBook开始清空");
+
+        new Thread(() -> {
+            KLog.e("TAG", "Thread");
+            ;// do somethings
+            try {
+                HomeBookList.clear();
+                KLog.e("TAG", "清空了还有数据吗" + HomeBookList.size());
+
+                initBookDetailData();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //initBookDetailData();
+                    adapter.notifyDataSetChanged();
+                    swipeRefresh.setRefreshing(false);
+                }
+            });
+        }).start();
+    }
+
+
+
+
 
     @Override
     protected void initEvents() {
-        KLog.e("TAG", "initEvents");
-        q = getIntent().getStringExtra("q");
-        setTitle(q);
-        spanCount = (int) getResources().getInteger(R.integer.home_span_count);
-        bookListPresenter = new BookListPresenterImpl(this);
-        bookInfoResponses = new ArrayList<>();
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.recycler_color1, R.color.recycler_color2,
-                R.color.recycler_color3, R.color.recycler_color4);
 
-        mLayoutManager = new GridLayoutManager(MyWishActivity.this, spanCount);
-        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return mListAdapter.getItemColumnSpan(position);
-            }
-        });
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        //设置adapter
-        mListAdapter = new BookListAdapter(this, bookInfoResponses, spanCount);
-        mRecyclerView.setAdapter(mListAdapter);
-
-        //设置Item增加、移除动画
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            private int lastVisibleItem;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mListAdapter.getItemCount()) {
-                    KLog.e("TAG", "onScrollStateChanged");
-                    onLoadMore();
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                KLog.e("TAG", "onScrolled");
-                super.onScrolled(recyclerView, dx, dy);
-                lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
-            }
-        });
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        onRefresh();
-    }
-
-    @Override
-    public void showMessage(String msg) {
-        view1 = View.inflate(this, R.layout.activity_search, null);
-        Snackbar.make(view1, msg, Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showProgress() {
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-            }
-        });
-    }
-
-    @Override
-    public void hideProgress() {
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
-    }
-
-    @Override
-    public void refreshData(Object result) {
-        bookInfoResponses.clear();
-        bookInfoResponses.addAll(((BookListResponse) result).getBooks());
-        mListAdapter.notifyDataSetChanged();
-        if (((BookListResponse) result).getTotal() > page * count) {
-            isLoadAll = false;
-        } else {
-            isLoadAll = true;
-        }
-        page++;
-    }
-
-    @Override
-    public void addData(Object result) {
-        bookInfoResponses.addAll(((BookListResponse) result).getBooks());
-        mListAdapter.notifyDataSetChanged();
-        if (((BookListResponse) result).getTotal() > page * count) {
-            page++;
-            isLoadAll = false;
-        } else {
-            isLoadAll = true;
-        }
-    }
-
-    @Override
-    public void onRefresh() {
-        page = 1;
-        bookListPresenter.loadBooks(q, null, 0, count, fields);
-    }
-
-    private void onLoadMore() {
-        if (!isLoadAll) {
-            if (!mSwipeRefreshLayout.isRefreshing()) {
-                bookListPresenter.loadBooks(q, null, page * count, count, fields);
-            }
-        } else {
-            showMessage(getResources().getString(R.string.no_more));
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putBoolean("isLoadAll", isLoadAll);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onDestroy() {
-        bookListPresenter.cancelLoading();
-        super.onDestroy();
     }
 }
 

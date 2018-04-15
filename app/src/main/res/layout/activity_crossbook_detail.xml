@@ -36,9 +36,10 @@
 
 
             <ImageView
+                android:layout_margin="15dp"
                 android:id="@+id/book_img"
                 android:layout_width="wrap_content"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:layout_gravity="center"
                 android:src="@drawable/book_image" />
 
@@ -174,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="100dp"
+                android:layout_marginBottom="40dp"
                 android:background="@drawable/listview_bg"
                 android:orientation="horizontal"
                 android:padding="6dp">

@@ -79,12 +79,8 @@ public class HomeBookListAdapter extends RecyclerView.Adapter<HomeBookListAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //注意 排序混乱解决
+
         final CrossBookData booklist = mBookList.get(position);
-
-//        final BookInfoResponse bookInfo = bookInfoResponses.get(position);
-
-        KLog.e("TAG", "position是多少啊"+position);
 
         holder.username.setText(booklist.getUsername());
         holder.bookName.setText(booklist.getBookName());

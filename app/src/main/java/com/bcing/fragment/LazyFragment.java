@@ -18,6 +18,7 @@ public class LazyFragment extends Fragment{
     //用于标记视图是否初始化
     protected boolean isVisible;
     protected View mRootView;
+
     //在onCreate方法之前调用，用来判断Fragment的UI是否是可见的
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

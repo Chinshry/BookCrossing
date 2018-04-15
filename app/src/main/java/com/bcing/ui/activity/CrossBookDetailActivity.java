@@ -230,8 +230,6 @@ public class CrossBookDetailActivity extends BaseActivity {
                                                     }
                                                 });
                                             }
-
-
                                         } else {
                                             toast("您已求漂过该书籍");
                                         }

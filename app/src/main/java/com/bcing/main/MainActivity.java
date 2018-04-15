@@ -63,8 +63,7 @@ public class MainActivity extends AutoLayoutActivity {
     Button mMainLxrBtnTrue;
     @BindView(R.id.m_main_wd_btn_true)
     Button mMainWdBtnTrue;
-//    @BindView(R.id.drawer_layout)
-//    DrawerLayout drawer;
+
     //fragment
     private Fragment mFragmentOne, mFragmentTwo, mFragmentThree, mFragmentFour, mFragmentFive;
     //fragment 适配器
