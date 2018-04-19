@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="6dp"
+    android:padding="5dp"
+    android:layout_gravity="center"
+    android:background="@drawable/listview_bg">
+
+
+
+
+    <LinearLayout
+        android:layout_weight="5"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingLeft="12dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:id="@+id/bookset_title"
+            android:maxLines="1"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textColor="#101010"
+            android:text="TextView" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp">
+
+            <TextView
+                android:id="@+id/bookset_author"
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#646464"
+                android:textSize="13sp"
+                android:text="TextView" />
+
+            <TextView
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#646464"
+                android:textSize="13sp"
+                android:text=" | " />
+
+            <TextView
+                android:id="@+id/bookset_publisher"
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#646464"
+                android:textSize="13sp"
+                android:text="TextView" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/bookset_summary"
+            android:maxLines="3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:textColor="#646464"
+            android:textSize="12sp"
+            android:text="戴维•巴尼特（David M. Barnett）：英国新晋获奖作家，1970年出生于英国兰开夏郡，曾出版包括《雅努斯的房子》《另外两个故事》在内的多部小说。2017年，戴维•巴尼特推出温情疗愈新作《孤独梦想家》，作品一经出版，便空降各大销售排行榜，风靡英伦三岛，成为多家媒体的年度荐书，是几乎每个英国人都喜欢的年度疗愈畅销书。戴维•巴尼特也自此成为英国炙手可热的畅销作家。" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_weight="1"
+        android:id="@+id/bookset_image"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:src="@drawable/bookimage" />
+</LinearLayout>

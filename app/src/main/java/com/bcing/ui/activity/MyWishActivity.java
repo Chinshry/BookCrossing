@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.bcing.R;
-import com.bcing.adapter.HomeBookListAdapter;
+import com.bcing.adapter.WishBookListAdapter;
 import com.bcing.common.URL;
 import com.bcing.entity.CrossBookData;
 import com.bcing.entity.MyUser;
@@ -41,7 +41,7 @@ public class MyWishActivity extends BaseActivity {
     private View view;
     private SwipeRefreshLayout swipeRefresh;
     private List<CrossBookData> HomeBookList = new ArrayList<>();
-    private HomeBookListAdapter adapter;
+    private WishBookListAdapter adapter;
 
     public MyWishActivity() {
         super();
@@ -81,14 +81,12 @@ public class MyWishActivity extends BaseActivity {
     private void analysisUrl(String isbn){
         //解析接口
         String url = URL.HOST_URL_DOUBAN_ISBN + isbn;
-        String crossuser = (String) BmobUser.getObjectByKey("username");
-        String crosscity = (String) BmobUser.getObjectByKey("city");
         RxVolley.get(url, new HttpCallback() {
             @Override
             public void onSuccess(String t) {
                 //Toast.makeText(getActivity(),t,Toast.LENGTH_LONG).show();
 
-                parsingJson(t,crossuser,crosscity);
+                parsingJson(t);
                 KLog.e("TAG", "onSuccess");
             }
         });
@@ -97,7 +95,7 @@ public class MyWishActivity extends BaseActivity {
     }
 
     //解析json
-    private void parsingJson(String t, String crossuser, String crosscity) {
+    private void parsingJson(String t) {
         try {
             JSONObject jsonObject = new JSONObject(t);
             JSONArray jsonAuthor = jsonObject.getJSONArray("author");
@@ -105,9 +103,6 @@ public class MyWishActivity extends BaseActivity {
             MyUser userInfo = BmobUser.getCurrentUser(MyUser.class);
 
             bookData.setIsbn(jsonObject.getString("isbn13"));
-
-            bookData.setUsername(crossuser);
-            bookData.setcity(crosscity);
 
             bookData.setBookName(jsonObject.getString("title"));
             bookData.setAuthor((String) jsonAuthor.get(0));
@@ -134,7 +129,7 @@ public class MyWishActivity extends BaseActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_View);
         LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(LayoutManager);
-        adapter = new HomeBookListAdapter(this, HomeBookList);
+        adapter = new WishBookListAdapter(this, HomeBookList);
         recyclerView.setAdapter(adapter);
     }
 
