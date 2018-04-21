@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bcing.R;
@@ -24,7 +23,7 @@ public class TwoFragment extends LazyFragment implements View.OnClickListener {
     private View view;
 
     private TextView tv_search;
-    private ImageView iv_scan;
+//    private ImageView iv_scan;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,8 +51,8 @@ public class TwoFragment extends LazyFragment implements View.OnClickListener {
         tv_search = (TextView) view.findViewById(R.id.tv_search);
         tv_search.setOnClickListener(this);
 
-        iv_scan = (ImageView) view.findViewById(R.id.iv_scan);
-        iv_scan.setOnClickListener(this);
+//        iv_scan = (ImageView) view.findViewById(R.id.iv_scan);
+//        iv_scan.setOnClickListener(this);
     }
 
     @Override
@@ -61,7 +60,7 @@ public class TwoFragment extends LazyFragment implements View.OnClickListener {
         if (v.getId() == R.id.tv_search) {
             ((MainActivity) getActivity()).showSearchView();
             KLog.e("TAG", "SEARCH");
-        } else if (v.getId() == R.id.iv_scan) {
+//        } else if (v.getId() == R.id.iv_scan) {
             //二维码
 //                if (PermissionUtils.requestCameraPermission(getActivity())) {
 //                    UIUtils.startActivity(new Intent(UIUtils.getContext(), CaptureActivity.class));

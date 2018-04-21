@@ -8,6 +8,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +65,8 @@ public class CrossBookDetailActivity extends BaseActivity {
     WebView webview;
     Button btn_echart;
 
+    LinearLayout user_info;
+
     private CrossBookData mCrossBookInfo;
 
 
@@ -91,11 +94,23 @@ public class CrossBookDetailActivity extends BaseActivity {
         username = (TextView) findViewById(R.id.username);
         city = (TextView) findViewById(R.id.city);
         date = (TextView) findViewById(R.id.date);
-
+        user_info= (LinearLayout) findViewById(R.id.user_info);
 
 
         btn_echart = (Button) findViewById(R.id.btn_echart);
         webview = (WebView) findViewById(R.id.webview);
+
+        user_info.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(activity, UserInfoActivity.class);
+                intent.putExtra("username", mCrossBookInfo.getUsername());
+                startActivity(intent);
+
+            }
+        });
 
         btn_echart.setOnClickListener(new View.OnClickListener() {
 

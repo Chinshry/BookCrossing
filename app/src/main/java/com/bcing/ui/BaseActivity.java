@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.bcing.R;
 import com.bcing.utils.SystemBarTintManager;
@@ -163,5 +164,30 @@ public abstract class BaseActivity extends AppCompatActivity {
 //    protected int getMenuID() {
 //        return R.menu.menu_empty;
 //    }
+
+
+
+    /**
+     * bmob im
+     */
+
+
+    /**
+     * 隐藏软键盘
+     */
+    public void hideSoftInputView() {
+        InputMethodManager manager = ((InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE));
+        if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
+            if (getCurrentFocus() != null)
+                manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    public Bundle getBundle() {
+        if (getIntent() != null && getIntent().hasExtra(getPackageName()))
+            return getIntent().getBundleExtra(getPackageName());
+        else
+            return null;
+    }
 
 }

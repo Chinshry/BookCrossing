@@ -21,6 +21,15 @@ public class MyUser extends BmobUser{
     private String desc;
     private List<String> wish;
     private BmobFile userimg;
+    private String avatar;
+
+
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+
 
     public BmobFile getUserimg() {
         return userimg;

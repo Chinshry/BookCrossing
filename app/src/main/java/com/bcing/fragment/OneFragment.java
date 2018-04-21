@@ -201,8 +201,10 @@ public class OneFragment extends LazyFragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    //initBookDetailData();
-                    adapter.notifyDataSetChanged();
+                    KLog.e("TAG", "刷新了");
+
+//                    initBookDetailData();
+//                    adapter.notifyDataSetChanged();
                     swipeRefresh.setRefreshing(false);
                 }
             });

@@ -35,7 +35,7 @@ public class SearchViewHolder implements View.OnClickListener {
     private OnSearchHandlerListener mListener;
 
     private ImageView iv_arrow_back;
-    private ImageView iv_scan;
+//    private ImageView iv_scan;
     private ImageView iv_fork_clear;
     private ImageView iv_search;
     public EditText et_search_content;
@@ -52,7 +52,7 @@ public class SearchViewHolder implements View.OnClickListener {
     private void initView() {
         KLog.e("TAG", "initView");
         iv_arrow_back = (ImageView) mContentView.findViewById(R.id.iv_arrow_back);
-        iv_scan = (ImageView) mContentView.findViewById(R.id.iv_scan);
+//        iv_scan = (ImageView) mContentView.findViewById(R.id.iv_scan);
         iv_fork_clear = (ImageView) mContentView.findViewById(R.id.iv_fork_clear);
         iv_search = (ImageView) mContentView.findViewById(R.id.iv_search);
         et_search_content = (EditText) mContentView.findViewById(R.id.et_search_content);
@@ -61,7 +61,7 @@ public class SearchViewHolder implements View.OnClickListener {
     private void initEvent() {
         KLog.e("TAG", "initEvent");
         iv_arrow_back.setOnClickListener(this);
-        iv_scan.setOnClickListener(this);
+//        iv_scan.setOnClickListener(this);
         iv_fork_clear.setOnClickListener(this);
         iv_search.setOnClickListener(this);
         et_search_content.addTextChangedListener(new TextWatcher() {
@@ -126,14 +126,14 @@ public class SearchViewHolder implements View.OnClickListener {
                     mListener.onSearch(SearchViewHolder.RESULT_SEARCH_CANCEL);
                 }
                 break;
-            case R.id.iv_scan:
-                if (mListener != null) {
-                    mListener.onSearch(SearchViewHolder.RESULT_SEARCH_GO_SCAN);
-                }
+//            case R.id.iv_scan:
+//                if (mListener != null) {
+//                    mListener.onSearch(SearchViewHolder.RESULT_SEARCH_GO_SCAN);
+//                }
 //                if (PermissionUtils.requestCameraPermission(mContext)) {
 //                    UIUtils.startActivity(new Intent(UIUtils.getContext(), CaptureActivity.class));
 //                }
-                break;
+//                break;
             case R.id.iv_fork_clear:
                 et_search_content.setText("");
                 break;

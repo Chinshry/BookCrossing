@@ -3,11 +3,9 @@ package com.bcing.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Base64;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,11 +19,11 @@ import java.io.ByteArrayOutputStream;
  */
 
 public class UtilTools {
-    public static void setFont(Context mContext, TextView textview){
-        //设置字体
-        Typeface fontType = Typeface.createFromAsset(mContext.getAssets(),"fonts/LXK.ttf");
-        textview.setTypeface(fontType);
-    }
+//    public static void setFont(Context mContext, TextView textview){
+//        //设置字体
+//        Typeface fontType = Typeface.createFromAsset(mContext.getAssets(),"fonts/LXK.ttf");
+//        textview.setTypeface(fontType);
+//    }
 //保存图片到ShareUtils
     public static void putImageToShare(Context mContent, ImageView imageView){
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();

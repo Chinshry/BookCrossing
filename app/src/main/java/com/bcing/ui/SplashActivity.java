@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.bcing.R;
 import com.bcing.utils.ShareUtils;
 import com.bcing.utils.StaticClass;
-import com.bcing.utils.UtilTools;
 
 /**
  * Created by chinshry on 2018/3/14.
@@ -73,10 +72,10 @@ public class SplashActivity extends AppCompatActivity{
         //延时2000ms
         handler.sendEmptyMessageDelayed(StaticClass.HANDLER_SPLASH,2000);
 
-        tv_splash = (TextView) findViewById(R.id.tv_splash);
+//        tv_splash = (TextView) findViewById(R.id.tv_splash);
 
         //设置字体
-        UtilTools.setFont(this,tv_splash);
+//        UtilTools.setFont(this,tv_splash);
 
     }
 

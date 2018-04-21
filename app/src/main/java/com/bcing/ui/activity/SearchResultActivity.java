@@ -73,8 +73,7 @@ public class SearchResultActivity extends BaseActivity implements IBookListView,
         spanCount = (int) getResources().getInteger(R.integer.home_span_count);
         bookListPresenter = new BookListPresenterImpl(this);
         bookInfoResponses = new ArrayList<>();
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.recycler_color1, R.color.recycler_color2,
-                R.color.recycler_color3, R.color.recycler_color4);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.orange);
 
         mLayoutManager = new GridLayoutManager(SearchResultActivity.this, spanCount);
         mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

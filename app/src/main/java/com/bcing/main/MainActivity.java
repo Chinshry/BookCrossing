@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 
 import com.bcing.R;
+import com.bcing.entity.MyUser;
 import com.bcing.fragment.FiveFragment;
 import com.bcing.fragment.FourFragment;
 import com.bcing.fragment.LazyFragment;
@@ -33,11 +34,15 @@ import com.bcing.fragment.ThreeFragment;
 import com.bcing.fragment.TwoFragment;
 import com.bcing.holder.SearchViewHolder;
 import com.bcing.ui.activity.SearchResultActivity;
+import com.bcing.utils.RefreshEvent;
 import com.bcing.utils.common.KeyBoardUtils;
 import com.bcing.utils.common.PermissionUtils;
 import com.bcing.utils.customtabs.CustomTabActivityHelper;
+import com.orhanobut.logger.Logger;
 import com.socks.library.KLog;
 import com.zhy.autolayout.AutoLayoutActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +50,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.newim.BmobIM;
+import cn.bmob.newim.core.ConnectionStatus;
+import cn.bmob.newim.listener.ConnectListener;
+import cn.bmob.newim.listener.ConnectStatusChangeListener;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+
+import static com.kymjs.rxvolley.toolbox.RxVolleyContext.toast;
+
 /**
  * @author fml
  * created at 2016/6/20 13:41
@@ -93,6 +107,9 @@ public class MainActivity extends AutoLayoutActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+
+
         if (fragmentManager == null) {
             Log.e("TAG", "fragmentManager");
             fragmentManager = getSupportFragmentManager();
@@ -153,6 +170,29 @@ public class MainActivity extends AutoLayoutActivity {
         iniView();
 
 
+//connect server
+        MyUser user = BmobUser.getCurrentUser(MyUser.class);
+        BmobIM.connect(user.getObjectId(), new ConnectListener() {
+            @Override
+            public void done(String uid, BmobException e) {
+                if (e == null) {
+                    Logger.i("connect success");
+                    //服务器连接成功就发送一个更新事件，同步更新会话及主页的小红点
+                    EventBus.getDefault().post(new RefreshEvent());
+                } else {
+                    Logger.e(e.getErrorCode() + "/" + e.getMessage());
+                }
+            }
+        });
+        //监听连接状态，也可通过BmobIM.getInstance().getCurrentStatus()来获取当前的长连接状态
+        BmobIM.getInstance().setOnConnectStatusChangeListener(new ConnectStatusChangeListener() {
+            @Override
+            public void onChange(ConnectionStatus status) {
+                toast("" + status.getMsg());
+            }
+        });
+//        //解决leancanary提示InputMethodManager内存泄露的问题
+//        IMMLeaks.fixFocusedViewLeak(getApplication());
 
     }
 

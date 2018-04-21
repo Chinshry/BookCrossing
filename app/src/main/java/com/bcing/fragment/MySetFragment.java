@@ -197,7 +197,7 @@ public class MySetFragment extends LazyFragment {
                 @Override
                 public void run() {
                     //initBookDetailData();
-                    adapter.notifyDataSetChanged();
+//                    adapter.notifyDataSetChanged();
                     swipeRefresh.setRefreshing(false);
                 }
             });

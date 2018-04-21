@@ -14,6 +14,14 @@
     <color name="deep_orange">#FFB358</color>
     <color name="background">#EEEEEE</color>
 
+    <!--BMOB IM-->
+    <color name="base_color_text_black">#3e3e39</color>
+    <color name="color_99">#999999</color>
+    <color name="color_line">#dadada</color>
+    <color name="color_1e1e1e">#1e1e1e</color>
+    <color name="color_b4">#b4b4b4</color>
+    <color name="color_msg_system_time_bg">#20000000</color>
+
 
 
 
@@ -60,5 +68,7 @@
     <color name="confirm_cancel_util_dialog_btn_right_text_color">#000000</color>
     <!-- 对话框的左侧按钮文字颜色 -->
     <color name="confirm_cancel_util_dialog_btn_left_text_color">#ffffffff</color>
+    <color name="color_emote_divder">#ffa1a1a1</color>
+    <color name="color_chat_send_status">#818181</color>
 
 </resources>

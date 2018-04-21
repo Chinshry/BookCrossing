@@ -30,13 +30,13 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:src="@drawable/ic_arrow_back_light" />
 
-            <ImageView
-                android:id="@+id/iv_scan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:src="@drawable/ic_scan_light" />
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_scan"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:paddingTop="8dp"-->
+                <!--android:paddingBottom="8dp"-->
+                <!--android:src="@drawable/ic_scan_light" />-->
 
             <EditText
                 android:id="@+id/et_search_content"
