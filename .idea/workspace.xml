@@ -17,33 +17,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3fb4abf4-52df-46c6-a80d-c3686ccc29be" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/截图/Screenshot_2018-04-30-00-12-40-054_com.bcing.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/截图/城市选择器.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/截图/忘记密码.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/截图/注册.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/截图/登陆.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/截图/编辑资料.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Screenshot/03 Detai.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/00 FindPassword.png" afterPath="$PROJECT_DIR$/Screenshot/00 FindPassword.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/00 Login.png" afterPath="$PROJECT_DIR$/Screenshot/00 Login.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/00 Sign.png" afterPath="$PROJECT_DIR$/Screenshot/00 Sign.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/00 Welcome.png" afterPath="$PROJECT_DIR$/Screenshot/00 Welcome.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/01 DetaiUserInfo.png" afterPath="$PROJECT_DIR$/Screenshot/01 DetaiUserInfo.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/01 Detail.png" afterPath="$PROJECT_DIR$/Screenshot/01 Detail.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/01 DetailCross.png" afterPath="$PROJECT_DIR$/Screenshot/01 DetailCross.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/01 Select.png" afterPath="$PROJECT_DIR$/Screenshot/01 Select.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/01.png" afterPath="$PROJECT_DIR$/Screenshot/01.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/02 Detai.png" afterPath="$PROJECT_DIR$/Screenshot/02 Detai.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/02.png" afterPath="$PROJECT_DIR$/Screenshot/02.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/03 Detai.png" afterPath="$PROJECT_DIR$/Screenshot/03 Detai.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/03.png" afterPath="$PROJECT_DIR$/Screenshot/03.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/04 Chat.png" afterPath="$PROJECT_DIR$/Screenshot/04 Chat.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/04 Record.png" afterPath="$PROJECT_DIR$/Screenshot/04 Record.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/04.png" afterPath="$PROJECT_DIR$/Screenshot/04.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/05 EditProfile.png" afterPath="$PROJECT_DIR$/Screenshot/05 EditProfile.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/05 MyWish.png" afterPath="$PROJECT_DIR$/Screenshot/05 MyWish.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/截图/05.png" afterPath="$PROJECT_DIR$/Screenshot/05.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Screenshot/02 Detai.png" afterPath="$PROJECT_DIR$/Screenshot/02 Detail.png" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -115,8 +91,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+            <state relative-caret-position="621">
+              <caret line="39" column="60" lean-forward="false" selection-start-line="39" selection-start-column="60" selection-end-line="39" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -2218,7 +2194,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526309224388" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526309578112" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2266,7 +2242,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526309224388" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526309578112" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2449,7 +2425,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526309224390" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1526309578113" />
       </method>
     </configuration>
     <list size="1">
@@ -3016,8 +2992,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        <state relative-caret-position="621">
+          <caret line="39" column="60" lean-forward="false" selection-start-line="39" selection-start-column="60" selection-end-line="39" selection-end-column="60" />
           <folding />
         </state>
       </provider>
