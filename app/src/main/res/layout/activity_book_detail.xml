@@ -21,7 +21,8 @@
             app:expandedTitleMarginBottom="16dp"
             app:expandedTitleMarginStart="24dp"
             app:expandedTitleTextAppearance="?android:attr/textAppearanceMedium"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleTextColor="@color/white">
 
             <ImageView
                 android:id="@+id/iv_book_bg"
@@ -54,7 +55,9 @@
                 android:minHeight="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:titleTextColor="@color/white"
+                />
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>

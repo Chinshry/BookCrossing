@@ -65,8 +65,8 @@ public class MyWishActivity extends BaseActivity {
 
         final JSONArray currentuserwish = (JSONArray) BmobUser.getObjectByKey("wish");
         try {
-            KLog.e("TAG", "getString" + currentuserwish.getString(0));
-            if(currentuserwish.length()>0){
+//            KLog.e("TAG", "getString" + currentuserwish.getString(0));
+            if(currentuserwish!=null&&currentuserwish.length()>0){
                 for(int i = 0; i < currentuserwish.length(); i++ ){
 //                    遍历 jsonarray 数组，把每一个对象转成 json 对象
                     String isbn = currentuserwish.getString(i);

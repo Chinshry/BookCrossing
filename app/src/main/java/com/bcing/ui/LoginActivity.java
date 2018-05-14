@@ -2,7 +2,6 @@ package com.bcing.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -28,7 +27,7 @@ import cn.bmob.v3.listener.SaveListener;
  * Describe：登录
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     //登录框和按钮
     private EditText et_account;
@@ -53,6 +52,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         initView();
+    }
+
+    @Override
+    protected void initEvents() {
+
     }
 
 

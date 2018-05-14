@@ -15,9 +15,6 @@ import com.bcing.ui.LoginActivity;
 import com.bcing.ui.activity.MyWishActivity;
 import com.socks.library.KLog;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import butterknife.ButterKnife;
 import cn.bmob.v3.BmobUser;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,19 +41,19 @@ public class FiveFragment extends LazyFragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
-            KLog.e("TAG", "nothing" +  BmobUser.getObjectByKey("wish"));
-            KLog.e("TAG", "String" + (JSONArray) BmobUser.getObjectByKey("wish"));
-            KLog.e("TAG", "valueOf" + (Object) BmobUser.getObjectByKey("wish"));
-            final JSONArray currentuserwish = (JSONArray) BmobUser.getObjectByKey("wish");
-            try {
-                KLog.e("TAG", "getString" + currentuserwish.getString(0));
-                KLog.e("TAG", "get" + currentuserwish.get(0));
-                KLog.e("TAG", "length" + currentuserwish.length());
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            KLog.e("TAG", "nothing" +  BmobUser.getObjectByKey("wish"));
+//            KLog.e("TAG", "String" + (JSONArray) BmobUser.getObjectByKey("wish"));
+//            KLog.e("TAG", "valueOf" + (Object) BmobUser.getObjectByKey("wish"));
+//            final JSONArray currentuserwish = (JSONArray) BmobUser.getObjectByKey("wish");
+//            try {
+//                KLog.e("TAG", "getString" + currentuserwish.getString(0));
+//                KLog.e("TAG", "get" + currentuserwish.get(0));
+//                KLog.e("TAG", "length" + currentuserwish.length());
+//
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
 
 
             view = inflater.inflate(R.layout.fragment_five, container, false);

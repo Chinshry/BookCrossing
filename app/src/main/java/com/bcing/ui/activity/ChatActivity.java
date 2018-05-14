@@ -147,6 +147,10 @@ public class ChatActivity extends BaseActivity implements MessageListHandler,Vie
     private LinearLayout layout_add;
     private LinearLayout layout_emo;
 
+    private TextView tv_picture;
+    private TextView tv_camera;
+
+
 
     private void initView() {
 
@@ -180,6 +184,11 @@ public class ChatActivity extends BaseActivity implements MessageListHandler,Vie
         btn_chat_voice.setOnClickListener(this);
         btn_chat_keyboard.setOnClickListener(this);
         btn_chat_send.setOnClickListener(this);
+
+        tv_picture = (TextView) findViewById(R.id.tv_picture);
+        tv_camera = (TextView) findViewById(R.id.tv_camera);
+        tv_picture.setOnClickListener(this);
+        tv_camera.setOnClickListener(this);
 
 
     }
@@ -222,7 +231,7 @@ public class ChatActivity extends BaseActivity implements MessageListHandler,Vie
 
             @Override
             public boolean onItemLongClick(int position) {
-                //这里省了个懒，直接长按就删除了该消息
+                //直接长按删除了该消息
                 c.deleteMessage(adapter.getItem(position));
                 adapter.remove(position);
                 return true;
@@ -384,12 +393,14 @@ public class ChatActivity extends BaseActivity implements MessageListHandler,Vie
                 sendMessage();
                 break;
             case R.id.tv_picture:
-//        sendLocalImageMessage();
-//        sendOtherMessage();
-                sendVideoMessage();
+//                sendLocalImageMessage();
+//                sendOtherMessage();
+//                sendVideoMessage();
+                toast("相册照片");
                 break;
             case R.id.tv_camera:
-                sendRemoteImageMessage();
+//                sendRemoteImageMessage();
+                toast("相机拍摄");
                 break;
         }
 
@@ -525,7 +536,8 @@ public class ChatActivity extends BaseActivity implements MessageListHandler,Vie
         msg.setContent(text);
         //可设置额外信息
         Map<String,Object> map =new HashMap<>();
-        map.put("level", "1");//随意增加信息
+        //随意增加信息
+        map.put("level", "1");
         msg.setExtraMap(map);
         c.sendMessage(msg, listener);
     }

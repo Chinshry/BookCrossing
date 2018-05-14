@@ -16,8 +16,6 @@ import cn.bmob.newim.bean.BmobIMConversationType;
 import cn.bmob.newim.bean.BmobIMMessage;
 import cn.bmob.newim.bean.BmobIMMessageType;
 
-import static com.kymjs.rxvolley.toolbox.RxVolleyContext.toast;
-
 /**
  * 私聊会话
  * Created by Administrator on 2016/5/25.
@@ -100,9 +98,6 @@ public class PrivateConversation extends Conversation{
 
     @Override
     public void onClick(Context context) {
-
-        toast("点击会话窗口");
-
         Intent intent = new Intent();
         intent.setClass(context, ChatActivity.class);
         Bundle bundle = new Bundle();

@@ -263,17 +263,6 @@ public class BookDetailActivity extends BaseActivity implements IBookDetailView 
                                                 }
 
                                             });
-//                                        userInfo.save(new SaveListener<String>() {
-//                                            @Override
-//                                            public void done(String objectId, BmobException e) {
-//                                                if (e == null) {
-//                                                    toast("您已成功收藏《" + mBookInfoResponse.getTitle() + "》！");
-//                                                } else {
-//                                                    toast("创建数据失败：" + e.getMessage());
-//                                                    KLog.e("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-//                                                }
-//                                            }
-//                                        });
                                         }
                                     } else {
                                         toast("您已收藏过该书籍");

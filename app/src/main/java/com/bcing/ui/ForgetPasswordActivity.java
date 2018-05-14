@@ -1,7 +1,6 @@
 package com.bcing.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +21,7 @@ import cn.bmob.v3.listener.UpdateListener;
  * Describe：忘记密码
  */
 
-public class ForgetPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class ForgetPasswordActivity extends BaseActivity implements View.OnClickListener {
 
     private Button btn_fg_pw;
     private EditText et_fg_mail;
@@ -33,6 +32,11 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_forget);
 
         initView();
+    }
+
+    @Override
+    protected void initEvents() {
+
     }
 
     //初始化View

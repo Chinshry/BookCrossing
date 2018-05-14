@@ -84,58 +84,63 @@ public class OneFragment extends LazyFragment {
         recyclerView.setAdapter(adapter);
     }
 
-    public void initBookDetailData() {
-        KLog.e("TAG", "initBookDetailData你执行了几次啊");
+    public void initBookDetailData()
+    {
+        //查询数据库中CrossInfo表所有数据
         BmobQuery<CrossInfo> query = new BmobQuery<CrossInfo>();
         String start = "2019-01-01 00:00:00";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
-        try {
+        try
+        {
             date = sdf.parse(start);
-        } catch (ParseException e) {
+        } catch (ParseException e)
+        {
             e.printStackTrace();
         }
         query.addWhereLessThan("createdAt", new BmobDate(date));
         query.order("-createdAt");
-        query.findObjects(new FindListener<CrossInfo>() {
+        query.findObjects(new FindListener<CrossInfo>()
+        {
             @Override
             public void done(List<CrossInfo> object, BmobException e) {
                 KLog.e("TAG", "done");
-                if (e == null) {
+                if (e == null)
+                {
                     Date lastrefreshdate = null;
-                    try {
+                    try
+                    {
                         lastrefreshdate = sdf.parse(object.get(0).getCreatedAt());
-                    } catch (ParseException e1) {
+                    } catch (ParseException e1)
+                    {
                         e1.printStackTrace();
                     }
                     toast("更新了" + object.size() + "条数据。最新数据时间;" + lastrefreshdate);
-                    for (CrossInfo CrossInformation : object) {
-                        Log.i("bmob", "CrossInfo CrossInformation : object" );
-
+                    for (CrossInfo CrossInformation : object)
+                    {
+                        //解析Url
                         analysisUrl(CrossInformation);
-
                     }
-                } else {
+                } else
+                {
                     Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
         });
-
-
-
-
     }
 
-    private void analysisUrl(CrossInfo CrossInformation){
-        //解析接口
+    private void analysisUrl(CrossInfo CrossInformation)
+    {
+        //拼接豆瓣api接口
         String url = URL.HOST_URL_DOUBAN_ISBN + CrossInformation.getIsbn();
         String crossuser = CrossInformation.getCrossuser();
         String crosscity = CrossInformation.getCrosscity();
-
-        KLog.e("TAG", "for循环 " + url);
-        RxVolley.get(url, new HttpCallback() {
+        //网络请求
+        RxVolley.get(url, new HttpCallback()
+        {
             @Override
-            public void onSuccess(String t) {
+            public void onSuccess(String t)
+            {
                 //Toast.makeText(getActivity(),t,Toast.LENGTH_LONG).show();
                 parsingJson(t,crossuser,crosscity);
             }

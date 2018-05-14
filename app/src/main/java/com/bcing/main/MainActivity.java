@@ -33,6 +33,7 @@ import com.bcing.fragment.OneFragment;
 import com.bcing.fragment.ThreeFragment;
 import com.bcing.fragment.TwoFragment;
 import com.bcing.holder.SearchViewHolder;
+import com.bcing.ui.BaseActivity;
 import com.bcing.ui.activity.SearchResultActivity;
 import com.bcing.utils.RefreshEvent;
 import com.bcing.utils.common.KeyBoardUtils;
@@ -40,7 +41,6 @@ import com.bcing.utils.common.PermissionUtils;
 import com.bcing.utils.customtabs.CustomTabActivityHelper;
 import com.orhanobut.logger.Logger;
 import com.socks.library.KLog;
-import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -57,14 +57,12 @@ import cn.bmob.newim.listener.ConnectStatusChangeListener;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 
-import static com.kymjs.rxvolley.toolbox.RxVolleyContext.toast;
-
 /**
  * @author fml
  * created at 2016/6/20 13:41
  * description：
  */
-public class MainActivity extends AutoLayoutActivity {
+public class MainActivity extends BaseActivity {
     @BindView(R.id.m_main_viewpager)
     ViewPager mMainViewPager;
     @BindView(R.id.m_main_fw_btn_true)
@@ -188,7 +186,7 @@ public class MainActivity extends AutoLayoutActivity {
         BmobIM.getInstance().setOnConnectStatusChangeListener(new ConnectStatusChangeListener() {
             @Override
             public void onChange(ConnectionStatus status) {
-                toast("" + status.getMsg());
+//                toast("" + status.getMsg());
             }
         });
 //        //解决leancanary提示InputMethodManager内存泄露的问题
@@ -196,6 +194,10 @@ public class MainActivity extends AutoLayoutActivity {
 
     }
 
+    @Override
+    protected void initEvents() {
+
+    }
 
 
 //    private void setupViewPager(ViewPager viewPager) {
